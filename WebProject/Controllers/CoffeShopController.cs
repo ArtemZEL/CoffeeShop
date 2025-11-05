@@ -35,15 +35,10 @@ namespace WebProject.Controllers
             return View();
         }
 
-        public IActionResult UserPage(int age, string name, string email)
+        public IActionResult AddPageCoffee()
         {
-            var userModel = new HomeCoffeShopViewModel();
-            userModel.UserName = name;
-            userModel.UserEmail = email;
-            userModel.Age = age;
-            return View(userModel);
+            return View();
         }
-
 
     }
 }
