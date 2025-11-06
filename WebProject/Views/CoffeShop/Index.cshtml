@@ -13,10 +13,10 @@
         @foreach (var product in Model.CoffeeProducts)
         {
             <div class="box">
-                <img src="@product" alt="" />
-                <h3>Arabic coffee</h3>
+                <img src="@product.Img" alt="" />
+                <h3>@product.Name</h3>
                 <div class="content">
-                    <span>$35</span>
+                    <span>$@product.Cell</span>
                     <a href="#">Buy</a>
                 </div>
             </div>
