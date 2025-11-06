@@ -6,20 +6,16 @@ namespace WebProject.Controllers
 {
     public class CoffeShopController : Controller
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+
         public IActionResult Index()
         {
             var model = new CoffeShopViewModel
             {
-                CoffeeProducts = new List<string>
-            {
-                    "/image/p1.png",
-                    "/image/p2.png",
-                    "/image/p3.png",
-                    "/image/p4.png",
-                    "/image/p5.png",
-                    "/image/p6.png",
-            },
-
+                CoffeeProducts = CoffeeRepository.CoffeeProducts,
                 UserComments = new List<string>
                 {
                     "/image/rev1.jpg",
@@ -27,6 +23,7 @@ namespace WebProject.Controllers
                     "image/rev3.jpg"
                 }
             };
+
             return View(model);
         }
 
@@ -34,16 +31,6 @@ namespace WebProject.Controllers
         {
             return View();
         }
-
-        public IActionResult UserPage(int age, string name, string email)
-        {
-            var userModel = new HomeCoffeShopViewModel();
-            userModel.UserName = name;
-            userModel.UserEmail = email;
-            userModel.Age = age;
-            return View(userModel);
-        }
-
 
     }
 }
