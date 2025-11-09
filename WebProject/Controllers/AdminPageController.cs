@@ -5,6 +5,13 @@ namespace WebProject.Controllers
 {
     public class AdminPageController : Controller
     {
+        private readonly CoffeeRepository _repository;
+
+        public AdminPageController(CoffeeRepository repository)
+        {
+            _repository = repository;
+        }
+
         public IActionResult Index()
         {
 
@@ -26,17 +33,8 @@ namespace WebProject.Controllers
         [HttpPost]
         public IActionResult Add(string name, string img, int cell )
         {
-            var newCoffee = new CoffeeProduct
-            {
-                Name = name,
-                Img = img,
-                Cell = cell
-            };
-            CoffeeRepository.CoffeeProducts.Add(newCoffee);
-            return View("Index","CoffeShop");
+            _repository.AddCoffee(name, img, cell);
+            return RedirectToAction("Index","CoffeShop");
         }
-
-
-
     }
 }

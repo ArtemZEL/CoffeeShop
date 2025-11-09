@@ -1,7 +1,11 @@
+using WebProject.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<CoffeeRepository>();
+
 
 var app = builder.Build();
 
