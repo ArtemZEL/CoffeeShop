@@ -11,10 +11,12 @@ namespace WebProject.Controllers
         /// </summary>
         /// <returns></returns>
         private readonly CoffeeRepository _coffeeRepository;
+        private readonly UserCommentsRepository _userCommentsRepository;
 
-        public CoffeShopController(CoffeeRepository coffeeRepository)
+        public CoffeShopController(CoffeeRepository coffeeRepository, UserCommentsRepository userCommentsRepository)
         {
             _coffeeRepository = coffeeRepository;
+            _userCommentsRepository = userCommentsRepository;
         }
 
         public IActionResult Index()
@@ -22,12 +24,7 @@ namespace WebProject.Controllers
             var model = new CoffeShopViewModel
             {
                 CoffeeProducts = _coffeeRepository.GetAll(),
-                UserComments = new List<string>
-                {
-                    "/image/rev1.jpg",
-                    "/image/rev2.jpg",
-                    "image/rev3.jpg"
-                }
+                UserComments = _userCommentsRepository.GetAll()
             };
 
             return View(model);

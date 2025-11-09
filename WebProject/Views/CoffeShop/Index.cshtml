@@ -36,11 +36,10 @@
         @foreach (var userComments in Model.UserComments)
         {
             <div class="box">
-                <img src="@userComments" alt="" />
-                <h2>Halif Mascard</h2>
+                <img src="@(string.IsNullOrEmpty(userComments.Img) ? "/image/default.jpg" : userComments.Img)" alt="User Image" />
+                <h2>@userComments.Name</h2>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
-                    dicta harum quasi cumque sunt velit.
+                    @userComments.Comments
                 </p>
             </div>
         }
