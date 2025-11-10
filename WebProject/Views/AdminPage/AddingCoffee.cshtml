@@ -1,0 +1,36 @@
+﻿@using WebProject.Models
+@model CoffeShopViewModel
+
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<section class="products" id="products">
+    <div class="heading">
+        <a class = "" href="/CoffeShop/LoginPageTest"></a>
+        <h2>Product's page'</h2>
+    </div>
+
+    <div class="products-container">
+        @if (Model?.CoffeeProducts != null && Model.CoffeeProducts.Any())
+        {
+            foreach (var coffee in Model.CoffeeProducts)
+            {
+                <div class="box">
+                    <img src="@coffee.Img" alt="@coffee.Name" />
+                    <h3>@coffee.Name</h3>
+                    <div class="content">
+                        <span>$@coffee.Cell</span>
+                        <a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>
+                        <a href="#">Edit</a>
+                        @**@
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No coffee products available yet.</p>
+        }
+    </div>
+</section>

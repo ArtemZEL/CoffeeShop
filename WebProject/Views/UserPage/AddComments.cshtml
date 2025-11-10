@@ -1,0 +1,23 @@
+﻿@model WebProject.Models.UserComment
+
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<div class="add-comment">
+    <h2>Add Your Comment</h2>
+
+   
+</div>
+<div class="customers-container">
+    <div class="box">
+        <img src="@(Model?.Img ?? "/image/default.jpg")" alt="User Image" />
+        <h3>@(Model?.Name ?? "Guest")</h3>
+        <form action="/UserPage/Add" method="post">
+            <textarea name="comments" placeholder="Write your comment..." rows="3"></textarea>
+            <button class="btn">Send Comment</button>
+        </form>
+    </div>
+
+
+</div>

@@ -1,7 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using WebProject.DBStuff;
+using WebProject.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<WebProjectContext>(
+    x => x.UseNpgsql(connectionString)
+);
+
+
+builder.Services.AddSingleton<CoffeeRepository>();
+builder.Services.AddSingleton<UserCommentsRepository>();
 
 var app = builder.Build();
 

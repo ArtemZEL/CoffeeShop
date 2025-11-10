@@ -2,17 +2,38 @@
 
 namespace WebProject.Models
 {
-    public static class CoffeeRepository
+    public class CoffeeRepository
     {
-        // Общее хранилище кофе (доступно всем контроллерам)
-        public static List<CoffeeProduct> CoffeeProducts { get; } = new List<CoffeeProduct>
+        private readonly List<CoffeeProductViewModel> _coffeeProducts;
+
+        public CoffeeRepository() 
+        { 
+            _coffeeProducts = new List<CoffeeProductViewModel>();
+
+            string[] namesCoffee = { "Espresso", "Latte", "Arabic coffee", "Cappuccino", "Mocha", "Flat White" };
+            decimal[] priceCoffee = { 35, 44, 55, 25, 60, 15 };
+            for (int i = 0; i < namesCoffee.Length; i++)
+            {
+                _coffeeProducts.Add(new CoffeeProductViewModel
+                {
+                    Name = namesCoffee[i],
+                    Img = $"/image/p{i+1}.png",
+                    Cell = priceCoffee[i]
+                });
+
+            }
+        }
+        public List<CoffeeProductViewModel> GetAll() => _coffeeProducts;
+
+        public void AddCoffee(string name, string img, decimal cell)
         {
-            new CoffeeProduct { Img = "/image/p1.png", Name = "Espresso", Cell = 35 },
-            new CoffeeProduct { Img = "/image/p2.png", Name = "Latte", Cell = 44 },
-            new CoffeeProduct { Img = "/image/p3.png", Name = "Arabic coffee", Cell = 55 },
-            new CoffeeProduct { Img = "/image/p4.png", Name = "Cappuccino", Cell = 25 },
-            new CoffeeProduct { Img = "/image/p5.png", Name = "Mocha", Cell = 60 },
-            new CoffeeProduct { Img = "/image/p6.png", Name = "Flat White", Cell = 15 },
-        };
+            _coffeeProducts.Add(new CoffeeProductViewModel
+            {
+                Name=name,
+                Img = img,
+                Cell = cell
+            });
+
+        }
     }
 }
