@@ -288,33 +288,53 @@ header.shadow {
 }
 
 .customers-container .box {
-  padding: 20px;
+  padding: 15px;
   box-shadow: var(--box-shadow);
   border-radius: 0.5rem;
   text-align: center;
+  position: relative;
+}
+.customers-container .box .stars {
+  margin: 5px 0 15px;
+  display: inline-block;
+  width: 100%;
+}
+
+.customers-container .box .btn-container {
+  margin-top: 10px;
+}
+
+.customers-container .box a.btn-danger,
+.customers-container .box a.btn-getback .customers-container .box a.btn-edit {
+  padding: 3px 12px;
+  font-size: 0.75rem;
+  margin: 0 3px;
 }
 
 .stars .bx {
   color: var(--star-color);
-  margin: 5px;
+  margin: 0 2px;
   cursor: pointer;
+  font-size: 0.9em;
 }
 
 .customers-container .box p {
   font-size: 0.938rem;
+  margin-bottom: 8px;
 }
 
 .customers-container .box h2 {
   font-size: 1.2rem;
   font-weight: 500;
-  margin: 0.5rem 0 0.5rem;
+  margin: 0.3rem 0;
 }
 
 .customers-container .box img {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
+  margin-bottom: 5px;
 }
 
 .footer {
@@ -418,8 +438,8 @@ header.shadow {
 }
 
 @media (max-width: 768px) {
-.logo img {
-    width: 60px; 
+  .logo img {
+    width: 60px;
   }
   header {
     padding: 12px 4%;
@@ -459,32 +479,32 @@ header.shadow {
   }
 }
 @media (max-width: 360px) {
-    header{
-      padding: 11px 4%;
-    }
-    .logo img{
-      width: 45px;
-    }
-    .home-text{
-      padding-top: 15px;
-    }
-    .home-text h1{
-      font-size: 1.4rem;
-    }
-    .home-text p{
-      font-size: 0.8rem;
-      font-weight: 300;
-    } 
-    .about-img{
-      order: 2;
-    }
-    .about-text{
-      text-align: center;
-    }
-    .about-text h2{
-      font-size: 1.2rem ;
-    }
-    .heading h2{
-      font-size: 1.2rem ;
-    }
+  header {
+    padding: 11px 4%;
   }
+  .logo img {
+    width: 45px;
+  }
+  .home-text {
+    padding-top: 15px;
+  }
+  .home-text h1 {
+    font-size: 1.4rem;
+  }
+  .home-text p {
+    font-size: 0.8rem;
+    font-weight: 300;
+  }
+  .about-img {
+    order: 2;
+  }
+  .about-text {
+    text-align: center;
+  }
+  .about-text h2 {
+    font-size: 1.2rem;
+  }
+  .heading h2 {
+    font-size: 1.2rem;
+  }
+}

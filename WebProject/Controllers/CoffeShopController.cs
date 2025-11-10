@@ -27,7 +27,7 @@ namespace WebProject.Controllers
         {
             var model = new CoffeShopViewModel
             {
-                CoffeeProducts = _webProjectContext.CoffeeProducts.Select(x=>new CoffeeProduct
+                CoffeeProducts = _webProjectContext.CoffeeProducts.Select(x=>new CoffeeProductViewModel
                 { 
                     Name = x.Name,
                     Img = x.Img,

@@ -24,15 +24,45 @@ namespace WebProject.Controllers
 
         public IActionResult AddPageCoffee()
         {
-            return View(new CoffeeProductDB());
+            return View();
         }
 
+
+        [HttpGet]
+        public IActionResult AddingCoffee()
+        {
+            var modelAddingCoffee = new CoffeShopViewModel
+            {
+
+                CoffeeProducts = _webProjectDBContext.CoffeeProducts
+                .Select(db => new CoffeeProductViewModel
+                {
+                    Id = db.Id,
+                    Name = db.Name,
+                    Img = db.Img,
+                    Cell = db.Cell,
+                }).ToList(),
+
+            };
+            return View(modelAddingCoffee);
+        }
+
+
+        //Remove Coffee
+        public IActionResult RemoveCoffee(int id)
+        {
+            var coffee = _webProjectDBContext.CoffeeProducts.First(p => p.Id == id);
+            _webProjectDBContext.CoffeeProducts.Remove(coffee);
+            _webProjectDBContext.SaveChanges();
+            return RedirectToAction("AddingCoffee");
+        }
+
+        //Add Coffee
         [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
-
 
         [HttpPost]
         public IActionResult Add(string name, string img, decimal cell )
