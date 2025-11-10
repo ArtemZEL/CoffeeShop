@@ -25,7 +25,7 @@ namespace WebProject.Models
         }
         public List<CoffeeProduct> GetAll() => _coffeeProducts;
 
-        public void AddCoffee(string name, string img, int cell)
+        public void AddCoffee(string name, string img, decimal cell)
         {
             _coffeeProducts.Add(new CoffeeProduct
             {

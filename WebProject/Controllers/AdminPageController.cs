@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebProject.DBStuff.Models.CoffeShop;
+using WebProject.DBStuff;
 using WebProject.Models;
 
 namespace WebProject.Controllers
@@ -6,10 +8,12 @@ namespace WebProject.Controllers
     public class AdminPageController : Controller
     {
         private readonly CoffeeRepository _repository;
+        private WebProjectContext _webProjectDBContext;
 
-        public AdminPageController(CoffeeRepository repository)
+        public AdminPageController(CoffeeRepository repository, WebProjectContext webProjectDBContext)
         {
             _repository = repository;
+            _webProjectDBContext = webProjectDBContext;
         }
 
         public IActionResult Index()
@@ -20,7 +24,7 @@ namespace WebProject.Controllers
 
         public IActionResult AddPageCoffee()
         {
-            return View();
+            return View(new CoffeeProductDB());
         }
 
         [HttpGet]
@@ -31,9 +35,18 @@ namespace WebProject.Controllers
 
 
         [HttpPost]
-        public IActionResult Add(string name, string img, int cell )
+        public IActionResult Add(string name, string img, decimal cell )
         {
-            _repository.AddCoffee(name, img, cell);
+            var newCoffee = new CoffeeProductDB
+            {
+                Name = name,
+                Img = img,
+                Cell = cell
+            };
+
+            _webProjectDBContext.CoffeeProducts.Add(newCoffee);
+            _webProjectDBContext.SaveChanges();
+
             return RedirectToAction("Index","CoffeShop");
         }
     }
