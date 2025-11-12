@@ -27,7 +27,7 @@ namespace WebProject.Controllers
                 Img = "/image/default.jpg"
             };
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]

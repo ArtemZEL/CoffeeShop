@@ -11,7 +11,7 @@
 </div>
 <div class="customers-container">
     <div class="box">
-        <img src="@(Model?.Img ?? "/image/default.jpg")" alt="User Image" />
+        <img src="@(Model?.Img ?? "/image/default.jpg")" alt="User Image"  />
         <h3>@(Model?.Name ?? "Guest")</h3>
         <form action="/UserPage/Add" method="post">
             <textarea name="comments" placeholder="Write your comment..." rows="3"></textarea>

@@ -27,13 +27,20 @@ namespace WebProject.Controllers
         {
             var model = new CoffeShopViewModel
             {
-                CoffeeProducts = _webProjectContext.CoffeeProducts.Select(x=>new CoffeeProductViewModel
-                { 
+                CoffeeProducts = _webProjectContext.CoffeeProducts.Select(x => new CoffeeProductViewModel
+                {
                     Name = x.Name,
                     Img = x.Img,
                     Cell = x.Cell
                 }).ToList(),
-                UserComments = _userCommentsRepository.GetAll()
+
+                UserComments = _webProjectContext.UserComments
+                .Select(u => new UserComment
+                {
+                    Name = u.Name,
+                    Img = u.Img,
+                    Comments = u.Comments
+                }).ToList()
             };
 
             return View(model);
