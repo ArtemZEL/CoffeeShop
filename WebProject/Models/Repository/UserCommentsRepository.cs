@@ -1,23 +1,36 @@
 ﻿using System.Collections.Generic;
+using WebProject.DBStuff;
+using WebProject.DBStuff.Models.CoffeShop;
 
 namespace WebProject.Models
 {
     public class UserCommentsRepository
     {
-        private readonly List<UserComment> _userComments = new();
 
-        public List<UserComment> GetAll()=> _userComments;
 
-        public void Add(string name, string comments)
+        private readonly WebProjectContext _dbContext;
+
+        public UserCommentsRepository(WebProjectContext dbContext)
         {
-            var newComments = new UserComment
+            _dbContext = dbContext;
+        }
+
+        public List<UserCommentsDB> GetAll()
+        {
+            return _dbContext.UserComments.ToList();
+        }
+
+        public void Add(string name, string comments, string? img = null)
+        {
+            var newComments = new UserCommentsDB
             {
-                Name = name,
-                Img = "/image/default.jpg",
+                Name = string.IsNullOrWhiteSpace(name) ? "Guest" : name,
+                Img = string.IsNullOrWhiteSpace(img) ? "/image/default.jpg" : img,
                 Comments = comments
             };
-            _userComments.Add(newComments);
 
+            _dbContext.UserComments.Add(newComments);
+            _dbContext.SaveChanges();
         }
     }
 }

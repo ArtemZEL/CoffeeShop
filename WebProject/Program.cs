@@ -13,8 +13,8 @@ builder.Services.AddDbContext<WebProjectContext>(
 );
 
 
-builder.Services.AddSingleton<CoffeeRepository>();
-builder.Services.AddSingleton<UserCommentsRepository>();
+builder.Services.AddScoped<CoffeeRepository>();
+builder.Services.AddScoped<UserCommentsRepository>();
 
 var app = builder.Build();
 
