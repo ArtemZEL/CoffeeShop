@@ -12,6 +12,8 @@ namespace WebProject.DBStuff
         }
         public DbSet<CoffeeProductDB> CoffeeProducts { get; set; }
         public DbSet<UserCommentsDB>  UserComments{ get; set; }
+        public DbSet<UserDB> Users { get; set; }
+
 
     }
 }

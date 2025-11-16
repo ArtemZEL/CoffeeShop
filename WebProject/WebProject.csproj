@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DBStuff\Repositories\" />
+    <Folder Include="Models\Repository\" />
   </ItemGroup>
 
 </Project>

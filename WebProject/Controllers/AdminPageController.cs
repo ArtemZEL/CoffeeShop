@@ -2,15 +2,17 @@
 using WebProject.DBStuff.Models.CoffeShop;
 using WebProject.DBStuff;
 using WebProject.Models;
+using WebProject.DBStuff.Repositories;
+using WebProject.DBStuff.Repositories.Interface;
 
 namespace WebProject.Controllers
 {
     public class AdminPageController : Controller
     {
-        private readonly CoffeeRepository _repository;
+        private readonly ICoffeeRepository _repository;
         private WebProjectContext _webProjectDBContext;
 
-        public AdminPageController(CoffeeRepository repository, WebProjectContext webProjectDBContext)
+        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext)
         {
             _repository = repository;
             _webProjectDBContext = webProjectDBContext;
@@ -51,9 +53,7 @@ namespace WebProject.Controllers
         //Remove Coffee
         public IActionResult RemoveCoffee(int id)
         {
-            var coffee = _webProjectDBContext.CoffeeProducts.First(p => p.Id == id);
-            _webProjectDBContext.CoffeeProducts.Remove(coffee);
-            _webProjectDBContext.SaveChanges();
+            _repository.Remove(id);
             return RedirectToAction("AddingCoffee");
         }
 
@@ -73,10 +73,7 @@ namespace WebProject.Controllers
                 Img = img,
                 Cell = cell
             };
-
-            _webProjectDBContext.CoffeeProducts.Add(newCoffee);
-            _webProjectDBContext.SaveChanges();
-
+            _repository.Add(newCoffee);
             return RedirectToAction("Index","CoffeShop");
         }
     }
