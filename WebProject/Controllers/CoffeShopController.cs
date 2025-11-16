@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WebProject.DBStuff;
+using WebProject.DBStuff.Repositories;
+using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Models;
 
 namespace WebProject.Controllers
@@ -11,12 +13,12 @@ namespace WebProject.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        private readonly CoffeeRepository _coffeeRepository;
+        private readonly ICoffeeRepository _coffeeRepository;
         private readonly UserCommentsRepository _userCommentsRepository;
         private WebProjectContext _webProjectContext;
 
 
-        public CoffeShopController(CoffeeRepository coffeeRepository, UserCommentsRepository userCommentsRepository, WebProjectContext webProjectContext)
+        public CoffeShopController(ICoffeeRepository coffeeRepository, UserCommentsRepository userCommentsRepository, WebProjectContext webProjectContext)
         {
             _coffeeRepository = coffeeRepository;
             _userCommentsRepository = userCommentsRepository;
@@ -27,7 +29,7 @@ namespace WebProject.Controllers
         {
             var model = new CoffeShopViewModel
             {
-                CoffeeProducts = _webProjectContext.CoffeeProducts.Select(x => new CoffeeProductViewModel
+                CoffeeProducts = _coffeeRepository.GetAll().Select(x => new CoffeeProductViewModel
                 {
                     Name = x.Name,
                     Img = x.Img,

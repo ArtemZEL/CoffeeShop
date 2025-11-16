@@ -2,7 +2,7 @@
 using WebProject.DBStuff;
 using WebProject.DBStuff.Models.CoffeShop;
 
-namespace WebProject.Models
+namespace WebProject.DBStuff.Repositories
 {
     public class UserCommentsRepository
     {
@@ -20,7 +20,7 @@ namespace WebProject.Models
             return _dbContext.UserComments.ToList();
         }
 
-        public void Add(string name, string comments, string? img = null)
+        public void AddComments(string name, string comments, string? img = null)
         {
             var newComments = new UserCommentsDB
             {

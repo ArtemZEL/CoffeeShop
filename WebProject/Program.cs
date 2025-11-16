@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebProject.DBStuff;
-using WebProject.Models;
+using WebProject.DBStuff.Repositories;
+using WebProject.DBStuff.Repositories.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -13,7 +14,8 @@ builder.Services.AddDbContext<WebProjectContext>(
 );
 
 
-builder.Services.AddScoped<CoffeeRepository>();
+builder.Services.AddScoped<ICoffeeRepository,CoffeeRepository>();
+builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<UserCommentsRepository>();
 
 var app = builder.Build();
