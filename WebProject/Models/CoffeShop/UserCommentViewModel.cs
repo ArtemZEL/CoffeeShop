@@ -1,6 +1,6 @@
 namespace WebProject.Models
 {
-    public class UserComment
+    public class UserCommentViewModel
     {
         public string Name { get; set; } 
         public string Img { get; set; } 

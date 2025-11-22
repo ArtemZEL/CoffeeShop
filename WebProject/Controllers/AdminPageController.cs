@@ -35,14 +35,14 @@ namespace WebProject.Controllers
         {
             var modelAddingCoffee = new CoffeShopViewModel
             {
-
-                CoffeeProducts = _webProjectDBContext.CoffeeProducts
+                CoffeeProducts = _repository.GetAllWithAuthors()
                 .Select(db => new CoffeeProductViewModel
                 {
                     Id = db.Id,
                     Name = db.Name,
                     Img = db.Img,
                     Cell = db.Cell,
+                    AuthorName = db.AuthorAdd != null ? db.AuthorAdd.UserName : "Unknown"
                 }).ToList(),
 
             };

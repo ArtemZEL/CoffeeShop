@@ -1,0 +1,26 @@
+﻿@model WebProject.Models.Users.UserViewModel
+
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<div>
+    <form action="/User/Registration" method="post">
+        <div>
+            UserName: @Html.TextBoxFor(x=>x.UserName)
+        </div>
+        <div>
+            Email: @Html.TextBoxFor(x=>x.Email)
+        </div>
+        <div>
+            Password: @Html.TextBoxFor(x=>x.Password)
+        </div>
+        <div>
+            Avatar: @Html.TextBoxFor(x=>x.AvatarUrl)
+        </div>
+        <div>
+            <button class="btn">Create</button>
+        </div>
+    </form>
+</div>
+

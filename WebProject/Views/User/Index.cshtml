@@ -1,0 +1,17 @@
+﻿@using WebProject.Models.Users
+@model List<UserViewModel>
+
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<div>
+    
+</div>
+
+<div>
+    @foreach (var user in Model)
+    {
+        <div>@user.UserName</div>    
+    }
+</div>

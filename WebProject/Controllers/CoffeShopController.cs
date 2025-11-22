@@ -37,7 +37,7 @@ namespace WebProject.Controllers
                 }).ToList(),
 
                 UserComments = _webProjectContext.UserComments
-                .Select(u => new UserComment
+                .Select(u => new UserCommentViewModel
                 {
                     Name = u.Name,
                     Img = u.Img,
