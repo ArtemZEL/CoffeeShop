@@ -6,13 +6,23 @@ namespace WebProject.DBStuff
     public class WebProjectContext : DbContext
     {
         public WebProjectContext(DbContextOptions options) : base(options)
-        {
-
-
-        }
+        { }
         public DbSet<CoffeeProductDB> CoffeeProducts { get; set; }
-        public DbSet<UserCommentsDB>  UserComments{ get; set; }
+        public DbSet<UserCommentsDB> UserComments { get; set; }
         public DbSet<UserDB> Users { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<UserDB>()
+                .HasMany(u=>u.CreatedCoffee)
+                .WithOne(u => u.AuthorAdd)
+                .HasForeignKey(c => c.AuthorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
+        }
 
 
     }
