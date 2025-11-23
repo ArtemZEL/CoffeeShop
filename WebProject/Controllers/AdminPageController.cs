@@ -84,6 +84,7 @@ namespace WebProject.Controllers
                 CategoryId = productViewModel.CategoryId
             };
             _repositoryCoffee.Add(newCoffee);
+
             return RedirectToAction("Index","CoffeShop");
         }
 
