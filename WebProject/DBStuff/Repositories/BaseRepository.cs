@@ -46,10 +46,10 @@ namespace WebProject.DBStuff.Repositories
         //    return models;
         //}
 
-        //public DbModel GetFirstById(int id)
-        //{
-        //    return _dbSet.First(c => c.Id == id);
-        //}
+        public DbModel GetFirstById(int id)
+        {
+            return _dbSet.First(c => c.Id == id);
+        }
 
 
 

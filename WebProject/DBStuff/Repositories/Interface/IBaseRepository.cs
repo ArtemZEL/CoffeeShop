@@ -8,5 +8,7 @@ namespace WebProject.DBStuff.Repositories.Interface
         List<DbModel> GetAll();
         void Remove(DbModel model);
         void Remove(int id);
+
+        DbModel GetFirstById(int id);
     }
 }

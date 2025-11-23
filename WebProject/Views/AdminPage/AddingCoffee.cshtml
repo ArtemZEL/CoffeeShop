@@ -1,5 +1,4 @@
-﻿@using WebProject.Models
-@model CoffeShopViewModel
+﻿@model CoffeShopViewModel
 
 @{
     Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
@@ -20,6 +19,7 @@
                     <img src="@coffee.Img" alt="@coffee.Name" />
                     <h3>@coffee.Name</h3>
                     <p class="author">Added by: @coffee.AuthorName</p>
+                    <p class="author">Added by: @coffee.</p>
                     <div class="content">
                         <span>$@coffee.Cell</span>
                         <a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>

@@ -29,7 +29,9 @@ namespace WebProject.Controllers
         {
             var model = new CoffeShopViewModel
             {
-                CoffeeProducts = _coffeeRepository.GetAll().Select(x => new CoffeeProductViewModel
+                CoffeeProducts = _coffeeRepository
+                .GetAll()
+                .Select(x => new CoffeeProductViewModel
                 {
                     Name = x.Name,
                     Img = x.Img,

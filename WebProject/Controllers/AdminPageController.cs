@@ -4,18 +4,21 @@ using WebProject.DBStuff;
 using WebProject.Models;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebProject.Controllers
 {
     public class AdminPageController : Controller
     {
-        private readonly ICoffeeRepository _repository;
+        private readonly ICoffeeRepository _repositoryCoffee;
+        private readonly ICategoryRepository _categoryRepository;
         private WebProjectContext _webProjectDBContext;
 
-        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext)
+        public AdminPageController(ICategoryRepository categoryRepository, ICoffeeRepository repository, WebProjectContext webProjectDBContext)
         {
-            _repository = repository;
+            _repositoryCoffee = repository;
             _webProjectDBContext = webProjectDBContext;
+            _categoryRepository = categoryRepository;
         }
 
         public IActionResult Index()
@@ -35,7 +38,7 @@ namespace WebProject.Controllers
         {
             var modelAddingCoffee = new CoffeShopViewModel
             {
-                CoffeeProducts = _repository.GetAllWithAuthors()
+                CoffeeProducts = _repositoryCoffee.GetAllWithAuthors()
                 .Select(db => new CoffeeProductViewModel
                 {
                     Id = db.Id,
@@ -53,7 +56,7 @@ namespace WebProject.Controllers
         //Remove Coffee
         public IActionResult RemoveCoffee(int id)
         {
-            _repository.Remove(id);
+            _repositoryCoffee.Remove(id);
             return RedirectToAction("AddingCoffee");
         }
 
@@ -61,20 +64,59 @@ namespace WebProject.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            var category = _categoryRepository.GetAll();
+            var viewModel = new CoffeeProductViewModel();
+            viewModel.AllCategory = category.Select(x=>new SelectListItem
+            { 
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Add(CoffeeProductViewModel productViewModel)
+        {
+
+            var authorCoffeeId = productViewModel.AuthorId;
+            var categoryCoffeeId = productViewModel.CategoryId;
+
+            var category = _categoryRepository.GetFirstById(categoryCoffeeId);
+
+
+            var newCoffee = new CoffeeProductDB()
+            {
+                Name = productViewModel.Name,
+                Img = productViewModel.Img,
+                Cell = productViewModel.Cell,
+                CreatedCategory = new List<CategoryDB> { category }
+            };
+            _repositoryCoffee.Add(newCoffee);
+            return RedirectToAction("Index","CoffeShop");
+        }
+
+        [HttpGet]
+        public IActionResult AddCategory()
+        {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(string name, string img, decimal cell )
+        public IActionResult AddCategory(string name)
         {
-            var newCoffee = new CoffeeProductDB
+            var newCategory = new CategoryDB
             {
                 Name = name,
-                Img = img,
-                Cell = cell
             };
-            _repository.Add(newCoffee);
-            return RedirectToAction("Index","CoffeShop");
+            _categoryRepository.Add(newCategory);
+            return RedirectToAction("Index");
         }
+
+
+
+
+
+
     }
 }

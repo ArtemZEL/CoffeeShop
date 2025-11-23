@@ -7,6 +7,8 @@
         public decimal Cell { get; set; }
         public int? AuthorId { get; set; }
         public virtual UserDB? AuthorAdd { get; set; }
+        public int CategoryId { get; set; }      // FK
+        public virtual CategoryDB CategoryCoffee { get; set; }  // Навигация
 
     }
 }

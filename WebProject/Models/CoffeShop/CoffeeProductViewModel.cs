@@ -14,6 +14,7 @@ namespace WebProject.Models
         public string AuthorName { get; set; }
 
         //In next update created on other category
-        //public List<SelectListItem> Category { get; set; } = new List<SelectListItem>();
+        public int CategoryId { get; set; }
+        public List<SelectListItem> AllCategory { get; set; } = new List<SelectListItem>();
     }
 }
