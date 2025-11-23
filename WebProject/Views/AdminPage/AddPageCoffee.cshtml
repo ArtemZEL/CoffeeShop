@@ -1,20 +1,34 @@
-﻿@{
+﻿@model CoffeeProductViewModel
+
+@{
     Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
 }
 
 <div>
     <h2>Add Page</h2>
-    <form action="/AdminPage/Add" method="post">
+    <form action="/AdminPage/AddPageCoffee" method="post">
         <div>
-            <input type="text" name="name" placeholder="Add Name coffee" /> 
+            <input type="text" name="Name" placeholder="Add Name coffee" />
         </div>
         <div>
-            <input type="text" name="img" placeholder="Add Url Image coffee"/>
+            <input type="text" name="Img" placeholder="Add Url Image coffee" />
         </div>
         <div>
-            <input type="text" name="cell" placeholder="Add Price"/>
+            <input type="text" name="Cell" placeholder="Add Price" />
         </div>
-        <button class="btn">Add New Coffee</button>  
-    </form>
 
+        <div>
+            @if (Model.CategoryNameList != null && Model.CategoryNameList.Any())
+            {
+                @Html.DropDownListFor(x => x.CategoryId, Model.CategoryNameList)
+            }
+            else
+            {
+                <select name="CategoryId">
+                    <option value="">-- No Categories Available --</option>
+                </select>
+            }
+        </div>
+        <button class="btn">Add New Coffee</button>
+    </form>
 </div>

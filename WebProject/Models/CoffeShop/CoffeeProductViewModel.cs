@@ -13,7 +13,7 @@ namespace WebProject.Models
         public int AuthorId { get; set; }
         public string AuthorName { get; set; }
 
-        //In next update created on other category
-        //public List<SelectListItem> Category { get; set; } = new List<SelectListItem>();
+        public int CategoryId { get; set; }
+        public List<SelectListItem> CategoryNameList { get; set; } = new List<SelectListItem>();
     }
 }
