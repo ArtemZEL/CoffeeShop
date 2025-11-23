@@ -4,11 +4,11 @@ using WebProject.DBStuff.Repositories.Interface;
 
 namespace WebProject.DBStuff.Repositories
 {
-    public class UserRepository : BaseRepository<UserDB>, IUserRepository
+    public class CategoryRepository : BaseRepository<CategoryDB>, ICategoryRepository
     {
-        public UserRepository(WebProjectContext portalContexnt) : base(portalContexnt)
+        public CategoryRepository(WebProjectContext portalContexnt) : base(portalContexnt)
         {
- 
+
         }
 
     }
