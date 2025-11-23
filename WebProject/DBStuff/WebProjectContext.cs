@@ -10,6 +10,7 @@ namespace WebProject.DBStuff
         public DbSet<CoffeeProductDB> CoffeeProducts { get; set; }
         public DbSet<UserCommentsDB> UserComments { get; set; }
         public DbSet<UserDB> Users { get; set; }
+        public DbSet<CategoryDB> Categories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -16,6 +16,8 @@ builder.Services.AddDbContext<WebProjectContext>(
 
 builder.Services.AddScoped<ICoffeeRepository,CoffeeRepository>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
+builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
+
 builder.Services.AddScoped<UserCommentsRepository>();
 
 var app = builder.Build();

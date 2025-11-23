@@ -4,9 +4,9 @@ using WebProject.DBStuff.Repositories.Interface;
 
 namespace WebProject.DBStuff.Repositories
 {
-    public class CategoryRepository : BaseRepository<CategoryDB>, ICategoryRepository
+    public class UserRepository : BaseRepository<UserDB>, IUserRepository
     {
-        public CategoryRepository(WebProjectContext portalContexnt) : base(portalContexnt)
+        public UserRepository(WebProjectContext portalContexnt) : base(portalContexnt)
         {
  
         }
