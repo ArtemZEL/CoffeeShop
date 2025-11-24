@@ -20,10 +20,11 @@
                     <img src="@coffee.Img" alt="@coffee.Name" />
                     <h3>@coffee.Name</h3>
                     <p class="author">Added by: @coffee.AuthorName</p>
+                    <p class="author">Category: @coffee.CategoryName</p>
                     <div class="content">
                         <span>$@coffee.Cell</span>
                         <a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>
-                        <a href="#">Edit</a>
+                        <a href="/AdminPage/EditCoffee?id=@coffee.Id">Edit</a>
                         @**@
                     </div>
                 </div>

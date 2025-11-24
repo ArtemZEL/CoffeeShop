@@ -39,6 +39,13 @@ namespace WebProject.DBStuff.Repositories
             return model;
         }
 
+        public DbModel Update(DbModel model)
+        {
+            _dbSet.Update(model);
+            _portalContext.SaveChanges();
+            return model;
+        }
+
         //public List<DbModel> AddRange(List<DbModel> models)
         //{
         //    _dbSet.AddRange(models);
@@ -50,17 +57,5 @@ namespace WebProject.DBStuff.Repositories
         {
             return _dbSet.First(c => c.Id == id);
         }
-
-
-
     }
-
-
-
-
-
 }
-
-
-
-
