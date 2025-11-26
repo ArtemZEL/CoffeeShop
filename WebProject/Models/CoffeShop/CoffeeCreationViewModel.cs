@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using WebProject.Models.CustomValidation;
 
 namespace WebProject.Models
 {
@@ -8,8 +9,7 @@ namespace WebProject.Models
         [Required]
         public string Img { get; set; }
         [Required]
-        [MaxLength(50)]
-        //[TestAtrribute]
+        [TestAtrribute]
         public string Name { get; set; }
         public decimal Cell { get; set; }
         public int AuthorId { get; set; }

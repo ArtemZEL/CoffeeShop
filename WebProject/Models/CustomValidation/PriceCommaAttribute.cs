@@ -3,27 +3,23 @@ using System.Text.RegularExpressions;
 
 namespace WebProject.Models.CustomValidation
 {
-     
-    public class TestAtrribute:ValidationAttribute
+    public class PriceCommaAttribute  : ValidationAttribute
     {
-        public TestAtrribute()
+        public PriceCommaAttribute()
         {
-            ErrorMessage = "Название не должно содержать цифры.";
+            ErrorMessage = "Цена должна быть указана через запятую. Например: 12,5";
         }
 
         public override bool IsValid(object? value)
         {
             if (value == null)
             {
-                return true;
+                return true; 
             }
 
             string str = value.ToString();
 
-            // Проверяем наличие цифр
-            return !Regex.IsMatch(str, @"\d");
+            return Regex.IsMatch(str, @"^\d+,\d+$");
         }
-
-
     }
 }
