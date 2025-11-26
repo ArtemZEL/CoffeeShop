@@ -1,4 +1,4 @@
-﻿@model CoffeeProductViewModel
+﻿@model CoffeeCreationViewModel
 
 @{
     Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
@@ -9,18 +9,22 @@
     <form action="/AdminPage/AddPageCoffee" method="post">
         <div>
             <input type="text" name="Name" placeholder="Add Name coffee" />
+            @Html.ValidationMessageFor(x=>x.Name)
         </div>
         <div>
             <input type="text" name="Img" placeholder="Add Url Image coffee" />
+            @Html.ValidationMessageFor(x => x.Img)
         </div>
         <div>
             <input type="text" name="Cell" placeholder="Add Price" />
+            @Html.ValidationMessageFor(x => x.Cell)
         </div>
 
         <div>
             @if (Model.CategoryNameList != null && Model.CategoryNameList.Any())
             {
                 @Html.DropDownListFor(x => x.CategoryId, Model.CategoryNameList)
+                @Html.ValidationMessageFor(x => x.CategoryId)
             }
             else
             {
@@ -28,6 +32,9 @@
                     <option value="">-- No Categories Available --</option>
                 </select>
             }
+        </div>
+        <div>
+            @Html.ValidationSummary();
         </div>
         <button class="btn">Add New Coffee</button>
     </form>

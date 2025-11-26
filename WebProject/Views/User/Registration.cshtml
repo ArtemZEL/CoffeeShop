@@ -8,12 +8,18 @@
     <form action="/User/Registration" method="post">
         <div>
             UserName: @Html.TextBoxFor(x=>x.UserName)
+            @Html.ValidationMessageFor(x => x.UserName)
+
         </div>
         <div>
             Email: @Html.TextBoxFor(x=>x.Email)
+            @Html.ValidationMessageFor(x => x.Email)
+
         </div>
         <div>
             Password: @Html.TextBoxFor(x=>x.Password)
+            @Html.ValidationMessageFor(x => x.Password)
+
         </div>
         <div>
             Avatar: @Html.TextBoxFor(x=>x.AvatarUrl)

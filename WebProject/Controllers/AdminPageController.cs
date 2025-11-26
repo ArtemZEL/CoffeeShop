@@ -27,21 +27,6 @@ namespace WebProject.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult AddPageCoffee()
-        {
-            var categories = _categoryRepository.GetAll();
-            var viewModel = new CoffeeProductViewModel
-            {
-                CategoryNameList = categories.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList()
-            };
-
-            return View(viewModel);
-        }
 
         [HttpGet]
         public IActionResult AddingCoffee()
@@ -55,7 +40,9 @@ namespace WebProject.Controllers
                     Name = db.Name,
                     Img = db.Img,
                     Cell = db.Cell,
-                    AuthorName = db.AuthorAdd != null ? db.AuthorAdd.UserName : "Unknown"
+                    AuthorName = db.AuthorAdd != null ? db.AuthorAdd.UserName : "Unknown",
+                    CategoryId = db.CategoryId,
+                    CategoryName = db.Category != null ? db.Category.Name : "No category"
                 }).ToList(),
 
             };
@@ -71,11 +58,41 @@ namespace WebProject.Controllers
         }
 
         //Add Coffee
-        
+
+
+        [HttpGet]
+        public IActionResult AddPageCoffee()
+        {
+            var categories = _categoryRepository.GetAll();
+            var viewModel = new CoffeeCreationViewModel
+            {
+                CategoryNameList = categories.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList()
+            };
+
+            return View(viewModel);
+        }
+
+
 
         [HttpPost]
-        public IActionResult AddPageCoffee(CoffeeProductViewModel productViewModel)
+        public IActionResult AddPageCoffee(CoffeeCreationViewModel productViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                var categories = _categoryRepository.GetAll();
+                productViewModel.CategoryNameList = categories.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+
+                return View(productViewModel);
+            }
+
             var newCoffee = new CoffeeProductDB
             {
                 Name = productViewModel.Name,
@@ -83,9 +100,10 @@ namespace WebProject.Controllers
                 Cell = productViewModel.Cell,
                 CategoryId = productViewModel.CategoryId
             };
+
             _repositoryCoffee.Add(newCoffee);
 
-            return RedirectToAction("Index","CoffeShop");
+            return RedirectToAction("AddingCoffee", "AdminPage");
         }
 
         //Add Category
@@ -107,5 +125,50 @@ namespace WebProject.Controllers
             return RedirectToAction("Index");
         }
 
+        //Edit Coffee
+        [HttpGet]
+        public IActionResult EditCoffee(int id)
+        {
+            var coffee = _repositoryCoffee.GetFirstById(id);
+            if (coffee == null)
+            {
+                return NotFound();
+            }
+            var categories = _categoryRepository.GetAll();
+            var viewModel = new CoffeeProductViewModel
+            {
+                Id = coffee.Id,
+                Name = coffee.Name,
+                Img = coffee.Img,
+                Cell = coffee.Cell,
+                CategoryId = coffee.CategoryId,
+                CategoryNameList = categories.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString(),
+                    Selected = x.Id == coffee.CategoryId
+                }).ToList()
+            };
+
+            return View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult EditCoffee(CoffeeProductViewModel productViewModel)
+        {
+            var existingCoffee = _repositoryCoffee.GetFirstById(productViewModel.Id);
+            if (existingCoffee == null)
+            {
+                return NotFound();
+            }
+
+            existingCoffee.Name = productViewModel.Name;
+            existingCoffee.Img = productViewModel.Img;
+            existingCoffee.Cell = productViewModel.Cell;
+            existingCoffee.CategoryId = productViewModel.CategoryId;
+
+            _repositoryCoffee.Update(existingCoffee);
+            return RedirectToAction("AddingCoffee"); 
+        }
+    }
 }

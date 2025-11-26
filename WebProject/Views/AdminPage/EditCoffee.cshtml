@@ -1,0 +1,38 @@
+﻿@model CoffeeProductViewModel
+
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<div>
+    <h2>Edit Coffee</h2>
+    <form asp-action="EditCoffee" asp-controller="AdminPage" method="post">
+
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div>
+            <input type="text" name="Name" value="@Model.Name" placeholder="Coffee Name" />
+        </div>
+        <div>
+            <input type="text" name="Img" value="@Model.Img" placeholder="Image URL" />
+        </div>
+        <div>
+            <input type="text" name="Cell" placeholder="Price" />
+        </div>
+
+        <div>
+            @if (Model.CategoryNameList != null && Model.CategoryNameList.Any())
+            {
+            @Html.DropDownListFor(x => x.CategoryId, Model.CategoryNameList)
+            }
+            else
+            {
+            <select name="CategoryId">
+                <option value="">-- No Categories Available --</option>
+            </select>
+            }
+        </div>
+
+        <button type="submit" class="btn">Update Coffee</button>
+    </form>
+</div>

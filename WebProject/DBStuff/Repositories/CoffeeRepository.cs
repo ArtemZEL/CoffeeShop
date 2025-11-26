@@ -15,7 +15,8 @@ namespace WebProject.DBStuff.Repositories
         public IEnumerable<CoffeeProductDB> GetAllWithAuthors()
         {
             return _dbSet
-                .Include(x => x.AuthorAdd) // Это загрузит связанного пользователя
+                .Include(x => x.AuthorAdd)
+                .Include(x=>x.Category)// Это загрузит связанного пользователя
                 .ToList();
         }
 
