@@ -34,6 +34,11 @@ namespace WebProject.Controllers
         [HttpPost]
         public IActionResult Registration(UserViewModel user)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+
             var userDb = new UserDB
             {
                 UserName = user.UserName,
