@@ -1,0 +1,9 @@
+﻿namespace WebProject.Models.Home
+{
+    public class IndexViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+    }
+}

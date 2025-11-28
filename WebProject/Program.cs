@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using WebProject.Controllers;
 using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
+using WebProject.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -9,16 +11,29 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services
+    .AddAuthentication(AuthController.AUTH_KEY)
+    .AddCookie(AuthController.AUTH_KEY, o => 
+    {
+        o.LoginPath = "/Auth/Login";
+        o.ForwardForbid = "/Auth/Login";
+
+    });
+
 builder.Services.AddDbContext<WebProjectContext>(
     x => x.UseNpgsql(connectionString)
 );
 
 
+
 builder.Services.AddScoped<ICoffeeRepository,CoffeeRepository>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
-
 builder.Services.AddScoped<UserCommentsRepository>();
+builder.Services.AddScoped<AuthService>();
+
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 

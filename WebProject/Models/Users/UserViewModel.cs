@@ -4,14 +4,14 @@ namespace WebProject.Models.Users
 {
     public class UserViewModel
     {
-        [Required]
+        //[Required]
         public string UserName { get; set; }
         
-        [Required]
-        [EmailAddress]
+        //[Required]
+        //[EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        //[Required]
         public string Password { get; set; }
         public string AvatarUrl { get; set; }
     }
