@@ -2,6 +2,8 @@
 
 
 <form  method="post">
+    @Html.HiddenFor(x=>x.ReturnUrl)
+
     <div>
         UserName: @Html.TextBoxFor(x => x.UserName)
     </div>

@@ -20,9 +20,13 @@ namespace WebProject.Controllers
 
        
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? ReturnUrl)
         {
-            return View();
+            var viewModel = new AuthViewModel();
+            viewModel.ReturnUrl = ReturnUrl;
+
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -52,7 +56,10 @@ namespace WebProject.Controllers
             HttpContext.SignInAsync(principal)
                 .Wait();
 
-            return RedirectToAction("Index","Home");
+            return 
+                !string.IsNullOrEmpty(authViewModel.ReturnUrl)
+                ?Redirect(authViewModel.ReturnUrl)
+                :RedirectToAction("Index","Home");
         }
 
 

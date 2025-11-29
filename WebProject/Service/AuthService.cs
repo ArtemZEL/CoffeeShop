@@ -17,7 +17,7 @@ namespace WebProject.Service
 
         public int GetId()
         {
-            var httpContext = _contextAccessor.HttpContext;
+           var httpContext = _contextAccessor.HttpContext;
             var id = int.Parse(httpContext
                 .User
                 .Claims

@@ -5,5 +5,7 @@ namespace WebProject.Models
         public List<CoffeeProductViewModel> CoffeeProducts { get; set; }
         public List<UserCommentViewModel> UserComments { get; set; }
 
+        public HomeCoffeShopViewModel LayoutModelUser { get; set; }
+
     }
 }
