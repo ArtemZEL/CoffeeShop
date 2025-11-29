@@ -1,21 +1,41 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Xml.Linq;
 using WebProject.Models;
+using WebProject.Models.Home;
+using WebProject.Service;
 
 namespace WebProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        private AuthService _authService;
+
+        public HomeController(AuthService authService)
         {
-            _logger = logger;
+            _authService = authService;
         }
 
         public IActionResult Index()
         {
-            return View();
+
+            var viewModel = new IndexViewModel();
+            if (_authService.IsAuthenticated())
+            {
+                var id = _authService.GetId();
+                var name = _authService.GetUser().UserName;
+
+                viewModel.Id = id;
+                viewModel.Name = name;
+            }
+            else
+            {
+                viewModel.Id = 0;
+                viewModel.Name = "Guess";
+            }
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

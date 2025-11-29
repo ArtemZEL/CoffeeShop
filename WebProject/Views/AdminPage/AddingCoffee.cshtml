@@ -23,8 +23,11 @@
                     <p class="author">Category: @coffee.CategoryName</p>
                     <div class="content">
                         <span>$@coffee.Cell</span>
-                        <a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>
-                        <a href="/AdminPage/EditCoffee?id=@coffee.Id">Edit</a>
+                        @if (coffee.CanDelete)
+                        {
+                            <a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>               
+                            <a href="/AdminPage/EditCoffee?id=@coffee.Id">Edit</a>
+                        }
                         @**@
                     </div>
                 </div>

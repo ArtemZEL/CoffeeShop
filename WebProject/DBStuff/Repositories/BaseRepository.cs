@@ -15,28 +15,34 @@ namespace WebProject.DBStuff.Repositories
             _dbSet = portalContext.Set<DbModel>();
         }
 
-        public List<DbModel> GetAll()
+        public virtual List<DbModel> GetAll()
         {
             return _dbSet.ToList();
         }
 
-        public void Remove(int id)
+        public virtual void Remove(int id)
         {
             var user = _dbSet.First(x => x.Id == id);
             Remove(user);
         }
 
-        public void Remove(DbModel model)
+        public virtual void Remove(DbModel model)
         {
             _dbSet.Remove(model);
             _portalContext.SaveChanges();
         }
 
-        public DbModel Add(DbModel model)
+        public virtual DbModel Add(DbModel model)
         {
             _dbSet.Add(model);
             _portalContext.SaveChanges();
             return model;
+        }
+        public virtual List<DbModel> AddRange(List<DbModel> models)
+        {
+            _dbSet.AddRange(models);
+            _portalContext.SaveChanges();
+            return models;
         }
 
         public DbModel Update(DbModel model)

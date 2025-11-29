@@ -39,14 +39,14 @@ namespace WebProject.Controllers
                 return View(user);
             }
 
-            var userDb = new UserDB
-            {
-                UserName = user.UserName,
-                Email = user.Email,
-                Password = user.Password,
-                AvatarUrl = user.AvatarUrl,
-            };
-            _userRepository.Add(userDb);
+            //var userDb = new UserDB
+            //{
+            //    UserName = user.UserName,
+            //    Email = user.Email,
+            //    Password = user.Password,
+            //    AvatarUrl = user.AvatarUrl,
+            //};
+            _userRepository.Registration(user.UserName,user.Password,user.Email);
             return RedirectToAction("Index");
 
         }

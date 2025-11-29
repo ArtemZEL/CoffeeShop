@@ -1,36 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebProject.DBStuff;
 using WebProject.DBStuff.Models.CoffeShop;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Models;
+using WebProject.Service;
 
 namespace WebProject.Controllers
 {
+    [Authorize]
     public class AdminPageController : Controller
     {
         private readonly ICoffeeRepository _repositoryCoffee;
         private readonly ICategoryRepository _categoryRepository;
         private WebProjectContext _webProjectDBContext;
-
-        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext, ICategoryRepository categoryRepository)
+        private AuthService _authService;
+        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext, ICategoryRepository categoryRepository, AuthService authService)
         {
             _repositoryCoffee = repository;
             _webProjectDBContext = webProjectDBContext;
             _categoryRepository = categoryRepository;
+            _authService = authService;
         }
 
         public IActionResult Index()
         {
-
             return View();
         }
-
 
         [HttpGet]
         public IActionResult AddingCoffee()
         {
+
+            var currentuserId = _authService.IsAuthenticated()
+                ? _authService.GetId()
+                : -1;
             var modelAddingCoffee = new CoffeShopViewModel
             {
                 CoffeeProducts = _repositoryCoffee.GetAllWithAuthors()
@@ -40,7 +46,8 @@ namespace WebProject.Controllers
                     Name = db.Name,
                     Img = db.Img,
                     Cell = db.Cell,
-                    AuthorName = db.AuthorAdd != null ? db.AuthorAdd.UserName : "Unknown",
+                    AuthorName =  db.AuthorAdd?.UserName ?? "No author",
+                    CanDelete = db.AuthorAdd?.Id == currentuserId,
                     CategoryId = db.CategoryId,
                     CategoryName = db.Category != null ? db.Category.Name : "No category"
                 }).ToList(),
@@ -92,13 +99,14 @@ namespace WebProject.Controllers
 
                 return View(productViewModel);
             }
-
+            var currentUserId = _authService.GetId();
             var newCoffee = new CoffeeProductDB
             {
                 Name = productViewModel.Name,
                 Img = productViewModel.Img,
                 Cell = productViewModel.Cell,
-                CategoryId = productViewModel.CategoryId
+                CategoryId = productViewModel.CategoryId,
+                AuthorId = currentUserId
             };
 
             _repositoryCoffee.Add(newCoffee);
@@ -168,7 +176,7 @@ namespace WebProject.Controllers
             existingCoffee.CategoryId = productViewModel.CategoryId;
 
             _repositoryCoffee.Update(existingCoffee);
-            return RedirectToAction("AddingCoffee"); 
+            return RedirectToAction("AddingCoffee");
         }
     }
 }
