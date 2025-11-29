@@ -18,7 +18,6 @@ namespace WebProject.Controllers
             _userRepository = userRepository;
         }
 
-       
         [HttpGet]
         public IActionResult Login(string? ReturnUrl)
         {
@@ -47,6 +46,7 @@ namespace WebProject.Controllers
                 new Claim("Id",user.Id.ToString()),
                 new Claim("UserName",user.UserName),
                 new Claim("AvatarUrl",user.AvatarUrl),
+                new Claim("Role",((int)user.Role).ToString()),
                 new Claim(ClaimTypes.AuthenticationMethod,AUTH_KEY)
             };
 
@@ -62,7 +62,6 @@ namespace WebProject.Controllers
                 :RedirectToAction("Index","Home");
         }
 
-
         [HttpGet]
         public IActionResult Registration()
         {
@@ -77,17 +76,18 @@ namespace WebProject.Controllers
                 authViewModel.Password,
                 authViewModel.Email);
 
-            return Login(authViewModel);
-               
+            return Login(authViewModel);               
         }
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync().Wait();
             return RedirectToAction("Index", "Home");
-
-
         }
 
+        public IActionResult Forbid()
+        {
+            return View();
+        }
 
 
     }

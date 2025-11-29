@@ -1,4 +1,7 @@
-﻿namespace WebProject.DBStuff.Models.CoffeShop
+﻿using Microsoft.AspNetCore.Identity;
+using WebProject.Enum;
+
+namespace WebProject.DBStuff.Models.CoffeShop
 {
     public class UserDB:BaseModel
     {
@@ -8,6 +11,6 @@
         public string AvatarUrl { get; set; }
         public virtual List<CoffeeProductDB> CreatedCoffee {  get; set; } = new List<CoffeeProductDB>();
 
-
+        public Role Role { get; set; }
     }
 }
