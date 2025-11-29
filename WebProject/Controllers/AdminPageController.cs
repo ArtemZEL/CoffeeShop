@@ -39,8 +39,6 @@ namespace WebProject.Controllers
                 : -1;
             var modelAddingCoffee = new CoffeShopViewModel
             {
-
-
                 CoffeeProducts = _repositoryCoffee.GetAllWithAuthors()
                 .Select(db => new CoffeeProductViewModel
                 {
@@ -101,13 +99,14 @@ namespace WebProject.Controllers
 
                 return View(productViewModel);
             }
-
+            var currentUserId = _authService.GetId();
             var newCoffee = new CoffeeProductDB
             {
                 Name = productViewModel.Name,
                 Img = productViewModel.Img,
                 Cell = productViewModel.Cell,
-                CategoryId = productViewModel.CategoryId
+                CategoryId = productViewModel.CategoryId,
+                AuthorId = currentUserId
             };
 
             _repositoryCoffee.Add(newCoffee);
