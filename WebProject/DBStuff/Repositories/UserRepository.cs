@@ -25,6 +25,13 @@ namespace WebProject.DBStuff.Repositories
 
         public void Registration(string userName, string password,string email)
         {
+
+            if(_dbSet.Any((x=>x.UserName == userName)))
+            {
+                throw new Exception($"{userName} already exist");
+            
+            }
+
             var user = new UserDB
             {
                 UserName = userName,

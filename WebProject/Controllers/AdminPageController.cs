@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebProject.Controllers.CustomAuthorizeAttributtes;
 using WebProject.DBStuff;
 using WebProject.DBStuff.Models.CoffeShop;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
+using WebProject.Enum;
 using WebProject.Models;
 using WebProject.Service;
+using WebProject.Service.Permissions;
 
 namespace WebProject.Controllers
 {
@@ -17,12 +20,14 @@ namespace WebProject.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private WebProjectContext _webProjectDBContext;
         private AuthService _authService;
-        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext, ICategoryRepository categoryRepository, AuthService authService)
+        private ICoffeShopPermision _coffeShopPermision;
+        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext, ICategoryRepository categoryRepository, AuthService authService, ICoffeShopPermision coffeShopPermision)
         {
             _repositoryCoffee = repository;
             _webProjectDBContext = webProjectDBContext;
             _categoryRepository = categoryRepository;
             _authService = authService;
+            _coffeShopPermision = coffeShopPermision;
         }
 
         public IActionResult Index()
@@ -47,7 +52,7 @@ namespace WebProject.Controllers
                     Img = db.Img,
                     Cell = db.Cell,
                     AuthorName =  db.AuthorAdd?.UserName ?? "No author",
-                    CanDelete = db.AuthorAdd?.Id == currentuserId,
+                    CanDelete = _coffeShopPermision.CanFindPage(db),
                     CategoryId = db.CategoryId,
                     CategoryName = db.Category != null ? db.Category.Name : "No category"
                 }).ToList(),
@@ -116,12 +121,14 @@ namespace WebProject.Controllers
 
         //Add Category
         [HttpGet]
+        [Role(Role.SuperAdmin, Role.Admin)]
         public IActionResult AddCategory()
         {
             return View();
         }
 
         [HttpPost]
+        [Role(Role.SuperAdmin, Role.Admin)]
         public IActionResult AddCategory(string name)
         {
 

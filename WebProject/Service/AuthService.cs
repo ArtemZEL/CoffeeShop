@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.Eventing.Reader;
 using WebProject.DBStuff.Models.CoffeShop;
 using WebProject.DBStuff.Repositories.Interface;
+using WebProject.Enum;
 using WebProject.Models.Home;
 
 namespace WebProject.Service
@@ -18,14 +19,14 @@ namespace WebProject.Service
         public int GetId()
         {
            var httpContext = _contextAccessor.HttpContext;
-            var id = int.Parse(httpContext
+            return int.Parse(httpContext
                 .User
                 .Claims
                 .First(x => x.Type == "Id")
                 .Value
                 );
 
-            return id;
+           
         }
 
         public UserDB GetUser()
@@ -39,5 +40,15 @@ namespace WebProject.Service
             return _contextAccessor.HttpContext!.User?.Identity?.IsAuthenticated ?? false;
         }
 
+        internal Role GetRole()
+        {
+            var httpContext = _contextAccessor.HttpContext;
+            return (Role)int.Parse(httpContext
+                .User
+                .Claims
+                .First(x => x.Type == "Role")
+                .Value
+                );
+        }
     }
 }

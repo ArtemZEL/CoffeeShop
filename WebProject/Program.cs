@@ -4,6 +4,7 @@ using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Service;
+using WebProject.Service.Permissions;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -16,7 +17,7 @@ builder.Services
     .AddCookie(AuthController.AUTH_KEY, o => 
     {
         o.LoginPath = "/Auth/Login";
-        o.ForwardForbid = "/Auth/Login";
+        o.ForwardForbid = "/Auth/Forbid";
 
     });
 
@@ -29,6 +30,7 @@ builder.Services.AddDbContext<WebProjectContext>(
 builder.Services.AddScoped<ICoffeeRepository,CoffeeRepository>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
+builder.Services.AddScoped<ICoffeShopPermision, CoffeShopPermision>();
 builder.Services.AddScoped<UserCommentsRepository>();
 builder.Services.AddScoped<AuthService>();
 
