@@ -1,5 +1,5 @@
-﻿
-
+﻿@using WebProject.Service
+@inject AuthService Auth
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,10 +30,19 @@
         <div class="header-icon">
             <i class="bx bxs-cart" id="cart-icons"></i>
             <i class="bx bx-search" id="search-icon"></i>
-            <a href="/User">
-                <i class="bx bx-user" id="user-icon">
-                </i>
-            </a>
+            @if (Auth.IsAuthenticated())
+            {
+                <a href="/User/Profile">
+                    <i class="bx bx-user" id="user-icon">@Auth.GetUserName()</i>
+                </a>
+            }
+            else
+            {
+                <a href="/Auth/Login">
+                    <i class="bx bx-user" id="user-icon"></i>
+                </a>
+            }
+
         </div>
         <!-- Search -->
         <div class="search-box">

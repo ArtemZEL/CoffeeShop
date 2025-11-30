@@ -47,6 +47,7 @@ namespace WebProject.Controllers
                 new Claim("UserName",user.UserName),
                 new Claim("AvatarUrl",user.AvatarUrl),
                 new Claim("Role",((int)user.Role).ToString()),
+                new Claim("Language",((int)user.Language).ToString()),
                 new Claim(ClaimTypes.AuthenticationMethod,AUTH_KEY)
             };
 
@@ -59,7 +60,7 @@ namespace WebProject.Controllers
             return 
                 !string.IsNullOrEmpty(authViewModel.ReturnUrl)
                 ?Redirect(authViewModel.ReturnUrl)
-                :RedirectToAction("Index","Home");
+                :RedirectToAction("Index", "CoffeShop");
         }
 
         [HttpGet]

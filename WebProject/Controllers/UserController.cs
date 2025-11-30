@@ -1,17 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WebProject.DBStuff.Models.CoffeShop;
+using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
+using WebProject.Enum;
 using WebProject.Models.Users;
+using WebProject.Service;
 
 namespace WebProject.Controllers
 {
     public class UserController : Controller
     {
         private IUserRepository _userRepository;
+        private readonly AuthService _authService;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, AuthService authService)
         {
             _userRepository = userRepository;
+            _authService = authService;
         }
 
         public IActionResult Index()
@@ -38,17 +46,34 @@ namespace WebProject.Controllers
             {
                 return View(user);
             }
-
-            //var userDb = new UserDB
-            //{
-            //    UserName = user.UserName,
-            //    Email = user.Email,
-            //    Password = user.Password,
-            //    AvatarUrl = user.AvatarUrl,
-            //};
             _userRepository.Registration(user.UserName,user.Password,user.Email);
             return RedirectToAction("Index");
 
         }
+
+        [Authorize]
+        public IActionResult Profile()
+        {
+            var viewModel = new ProfileViewModel();
+
+            viewModel.UserName = _authService.GetUserName();
+            viewModel.Languages = System
+                .Enum
+                .GetValues<Language>()
+                .ToList();
+            viewModel.Language = _authService.GetLanguage();
+            return View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult ChangeLanguage(Language language)
+        {
+            var user = _authService.GetUser();
+            user.Language = language;
+            _userRepository.Update(user);
+            return RedirectToAction("Index", "CoffeShop");
+        }
+
+
     }
 }

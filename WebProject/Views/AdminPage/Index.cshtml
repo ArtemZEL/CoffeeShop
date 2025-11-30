@@ -2,21 +2,27 @@
     Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
 }
 
+@using WebProject.Service
+@inject AuthService Auth
+
+@using WebProject.Localizations
+
+
 <div>
-    Hello Admin Name
+    Hello @(Auth.IsAuthenticated() ? Auth.GetUserName() : "Guest")
     <div>
         <a href="/AdminPage/AddPageCoffee">
-            Add Coffee
+            @AdminPage.Index_Button_Add
         </a>
     </div>
     <div>
         <a href="/AdminPage/AddingCoffee">
-            Adding Yor'e Coffee
+            @AdminPage.Index_Button_Adding_Coffee
         </a>
     </div>
     <div>
         <a href="/AdminPage/AddCategory">
-            Adding Category
+            @AdminPage.Index_Button_Adding_Category
         </a>
     </div>
 </div>

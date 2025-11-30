@@ -25,8 +25,6 @@ namespace WebProject.Service
                 .First(x => x.Type == "Id")
                 .Value
                 );
-
-           
         }
 
         public UserDB GetUser()
@@ -47,6 +45,28 @@ namespace WebProject.Service
                 .User
                 .Claims
                 .First(x => x.Type == "Role")
+                .Value
+                );
+        }
+
+        public string GetUserName()
+        {
+            if (!IsAuthenticated())
+            { 
+                    return "";
+            }    
+            var claim = _contextAccessor.HttpContext.User.Claims
+                .FirstOrDefault(x => x.Type == "UserName");
+
+            return claim?.Value ?? "";
+        }
+
+        public Language GetLanguage()
+        {
+            return (Language)int.Parse(_contextAccessor.HttpContext
+                .User
+                .Claims
+                .First(x => x.Type == "Language")
                 .Value
                 );
         }

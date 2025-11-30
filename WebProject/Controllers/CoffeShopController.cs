@@ -1,5 +1,6 @@
-using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
@@ -24,7 +25,7 @@ namespace WebProject.Controllers
             _userCommentsRepository = userCommentsRepository;
             _webProjectContext = webProjectContext;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = new CoffeShopViewModel
