@@ -12,5 +12,6 @@ namespace WebProject.DBStuff.Models.CoffeShop
         public virtual List<CoffeeProductDB> CreatedCoffee {  get; set; } = new List<CoffeeProductDB>();
 
         public Role Role { get; set; }
+        public Language Language { get;  set; }
     }
 }

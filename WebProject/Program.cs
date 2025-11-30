@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebProject.Controllers;
+using WebProject.CustomMidleware;
 using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
@@ -56,6 +57,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.UseMiddleware<CustomLocalizazationMidleware>();
 
 
 app.MapControllerRoute(

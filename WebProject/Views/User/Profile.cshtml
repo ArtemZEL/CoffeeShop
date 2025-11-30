@@ -1,0 +1,19 @@
+﻿@using WebProject.Models.Users
+@model ProfileViewModel
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<h1>Hi @Model.UserName</h1>
+
+<div>Language: @Model.Language</div>
+
+<form action="/User/ChangeLanguage" method="post">
+    <select name="language">
+        @foreach (var language in Model.Languages)
+        {
+            <option value="@language">@language</option>
+        }
+    </select>
+    <button>Update Language</button>
+</form>
