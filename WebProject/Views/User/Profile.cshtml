@@ -17,3 +17,14 @@
     </select>
     <button>Update Language</button>
 </form>
+
+<div class="customers-container">
+    <div class="box">
+        <img src="@Model.AvatarUrl?t=@(DateTime.Now.Ticks)" alt="Avatar" class="avatar">
+    </div>
+</div>
+
+<form action="/User/UpdateAvatar" method="post" enctype="multipart/form-data">
+    <input type="file" name="avatar" />
+    <button>Update Avatar</button>
+</form>

@@ -70,5 +70,13 @@ namespace WebProject.Service
                 .Value
                 );
         }
+
+        public bool IsAdmin()
+        { 
+            return IsAuthenticated()?GetRole()==Role.Admin:false;
+        }
+
+
+
     }
 }

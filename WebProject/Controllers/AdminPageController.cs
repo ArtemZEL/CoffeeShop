@@ -8,7 +8,9 @@ using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Enum;
 using WebProject.Models;
+using WebProject.Models.Users;
 using WebProject.Service;
+using WebProject.Service.Flie;
 using WebProject.Service.Permissions;
 
 namespace WebProject.Controllers
@@ -21,13 +23,17 @@ namespace WebProject.Controllers
         private WebProjectContext _webProjectDBContext;
         private AuthService _authService;
         private ICoffeShopPermision _coffeShopPermision;
-        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext, ICategoryRepository categoryRepository, AuthService authService, ICoffeShopPermision coffeShopPermision)
+        private IProfileFileService _profileFileService;
+        private IUserRepository _userRepository;
+        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext, ICategoryRepository categoryRepository, AuthService authService, ICoffeShopPermision coffeShopPermision, IProfileFileService profileFileService, IUserRepository userRepository)
         {
             _repositoryCoffee = repository;
             _webProjectDBContext = webProjectDBContext;
             _categoryRepository = categoryRepository;
             _authService = authService;
             _coffeShopPermision = coffeShopPermision;
+            _profileFileService = profileFileService;
+            _userRepository = userRepository;
         }
 
         public IActionResult Index()
@@ -51,7 +57,7 @@ namespace WebProject.Controllers
                     Name = db.Name,
                     Img = db.Img,
                     Cell = db.Cell,
-                    AuthorName =  db.AuthorAdd?.UserName ?? "No author",
+                    AuthorName = db.AuthorAdd?.UserName ?? "No author",
                     CanDelete = _coffeShopPermision.CanFindPage(db),
                     CategoryId = db.CategoryId,
                     CategoryName = db.Category != null ? db.Category.Name : "No category"
@@ -142,6 +148,7 @@ namespace WebProject.Controllers
 
         //Edit Coffee
         [HttpGet]
+        [Role(Role.SuperAdmin, Role.Admin)]
         public IActionResult EditCoffee(int id)
         {
             var coffee = _repositoryCoffee.GetFirstById(id);
@@ -185,5 +192,32 @@ namespace WebProject.Controllers
             _repositoryCoffee.Update(existingCoffee);
             return RedirectToAction("AddingCoffee");
         }
+
+        [HttpGet]
+        [Role(Role.SuperAdmin)]
+        public IActionResult AllAvatarsUser()
+        {
+            var user = _userRepository
+                .GetAll()
+                .Select(x => new AllUsersAndProfileViewModel
+                {
+                    Id = x.Id,
+                    Name = x.UserName
+                }).ToList();
+
+            return View(user);
+        }
+
+        [Role(Role.SuperAdmin)]
+        public IActionResult DeleteAvatarsUser(int userId)
+        {
+
+            _profileFileService.ReplaceToAvatarToDefault(userId);
+
+            return RedirectToAction("AllAvatarsUser");
+        }
+
+
+
     }
 }

@@ -37,7 +37,9 @@ namespace WebProject.DBStuff.Repositories
                 UserName = userName,
                 Password = HashPassword(password),
                 Email = email,
-                AvatarUrl ="/image/default.jpg"
+                AvatarUrl ="/image/default.jpg",
+                Role = Enum.Role.User,
+                Language = Enum.Language.English,
             };
 
             _dbSet.Add(user);

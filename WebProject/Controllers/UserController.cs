@@ -8,6 +8,7 @@ using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Enum;
 using WebProject.Models.Users;
 using WebProject.Service;
+using WebProject.Service.Flie;
 
 namespace WebProject.Controllers
 {
@@ -15,11 +16,15 @@ namespace WebProject.Controllers
     {
         private IUserRepository _userRepository;
         private readonly AuthService _authService;
+        private IWebHostEnvironment _webHostEnvironment;
+        private IProfileFileService _profileFileService;
 
-        public UserController(IUserRepository userRepository, AuthService authService)
+        public UserController(IUserRepository userRepository, AuthService authService, IWebHostEnvironment webHostEnvironment, IProfileFileService profileFileService)
         {
             _userRepository = userRepository;
             _authService = authService;
+            _webHostEnvironment = webHostEnvironment;
+            _profileFileService = profileFileService;
         }
 
         public IActionResult Index()
@@ -51,6 +56,7 @@ namespace WebProject.Controllers
 
         }
 
+        
         [Authorize]
         public IActionResult Profile()
         {
@@ -62,6 +68,8 @@ namespace WebProject.Controllers
                 .GetValues<Language>()
                 .ToList();
             viewModel.Language = _authService.GetLanguage();
+            var userIdAvatar = _authService.GetId();
+            viewModel.AvatarUrl = $"/image/avatar/{userIdAvatar}.jpg";
             return View(viewModel);
         }
 
@@ -73,6 +81,15 @@ namespace WebProject.Controllers
             _userRepository.Update(user);
             return RedirectToAction("Index", "CoffeShop");
         }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult UpdateAvatar(IFormFile avatar)
+        {
+            _profileFileService.UploadAvatar(avatar);   
+            return RedirectToAction("Profile");
+        }
+
 
 
     }

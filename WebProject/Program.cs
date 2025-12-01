@@ -5,6 +5,7 @@ using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Service;
+using WebProject.Service.Flie;
 using WebProject.Service.Permissions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +33,7 @@ builder.Services.AddScoped<ICoffeeRepository,CoffeeRepository>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
 builder.Services.AddScoped<ICoffeShopPermision, CoffeShopPermision>();
+builder.Services.AddScoped<IProfileFileService, ProfileFileService>();
 builder.Services.AddScoped<UserCommentsRepository>();
 builder.Services.AddScoped<AuthService>();
 

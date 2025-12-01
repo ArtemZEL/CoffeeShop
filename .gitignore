@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+#Not needed files on projects 
+WebProject/wwwroot/image/avatar/*
+!WebProject/wwwroot/image/avatar/defaultAvatar.jpg
