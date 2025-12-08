@@ -16,6 +16,7 @@ using WebProject.Service.Permissions;
 namespace WebProject.Controllers
 {
     [Authorize]
+    [Role(Role.User)]
     public class AdminPageController : Controller
     {
         private readonly ICoffeeRepository _repositoryCoffee;
@@ -25,7 +26,16 @@ namespace WebProject.Controllers
         private ICoffeShopPermision _coffeShopPermision;
         private IProfileFileService _profileFileService;
         private IUserRepository _userRepository;
-        public AdminPageController(ICoffeeRepository repository, WebProjectContext webProjectDBContext, ICategoryRepository categoryRepository, AuthService authService, ICoffeShopPermision coffeShopPermision, IProfileFileService profileFileService, IUserRepository userRepository)
+        private ISliderFileServices _sliderFileServices;
+
+        public AdminPageController(ICoffeeRepository repository, 
+            WebProjectContext webProjectDBContext, 
+            ICategoryRepository categoryRepository, 
+            AuthService authService, 
+            ICoffeShopPermision coffeShopPermision, 
+            IProfileFileService profileFileService, 
+            IUserRepository userRepository, 
+            ISliderFileServices sliderFileServices)
         {
             _repositoryCoffee = repository;
             _webProjectDBContext = webProjectDBContext;
@@ -34,6 +44,7 @@ namespace WebProject.Controllers
             _coffeShopPermision = coffeShopPermision;
             _profileFileService = profileFileService;
             _userRepository = userRepository;
+            _sliderFileServices = sliderFileServices;
         }
 
         public IActionResult Index()
@@ -42,6 +53,7 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
+        
         public IActionResult AddingCoffee()
         {
 
@@ -79,6 +91,7 @@ namespace WebProject.Controllers
 
 
         [HttpGet]
+
         public IActionResult AddPageCoffee()
         {
             var categories = _categoryRepository.GetAll();
@@ -127,14 +140,12 @@ namespace WebProject.Controllers
 
         //Add Category
         [HttpGet]
-        [Role(Role.SuperAdmin, Role.Admin)]
         public IActionResult AddCategory()
         {
             return View();
         }
 
         [HttpPost]
-        [Role(Role.SuperAdmin, Role.Admin)]
         public IActionResult AddCategory(string name)
         {
 
@@ -148,7 +159,6 @@ namespace WebProject.Controllers
 
         //Edit Coffee
         [HttpGet]
-        [Role(Role.SuperAdmin, Role.Admin)]
         public IActionResult EditCoffee(int id)
         {
             var coffee = _repositoryCoffee.GetFirstById(id);
@@ -194,7 +204,6 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
-        [Role(Role.SuperAdmin)]
         public IActionResult AllAvatarsUser()
         {
             var user = _userRepository
@@ -208,16 +217,42 @@ namespace WebProject.Controllers
             return View(user);
         }
 
-        [Role(Role.SuperAdmin)]
         public IActionResult DeleteAvatarsUser(int userId)
         {
-
             _profileFileService.ReplaceToAvatarToDefault(userId);
-
             return RedirectToAction("AllAvatarsUser");
         }
+        
+        public IActionResult UpdateImagePage()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult UpdateImagePage(IFormFile pageimage)
+        {
+            _sliderFileServices.UploudFonCoffeShop(pageimage);
+            return RedirectToAction("Index");
+        }
+        public IActionResult ManageGallery()
+        {
+            var model = new CoffeeProductViewModel
+            {
+                GalleryImages = _sliderFileServices.GetFonGallery()
+            };
 
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveImage(string fileName)
+        {
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                _sliderFileServices.RemoveImageSlider(fileName);
+            }
+            return RedirectToAction("ManageGallery");
+        }
 
     }
 }

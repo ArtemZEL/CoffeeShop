@@ -72,8 +72,17 @@ namespace WebProject.Service
         }
 
         public bool IsAdmin()
-        { 
-            return IsAuthenticated()?GetRole()==Role.Admin:false;
+        {
+            if (!IsAuthenticated())
+            {
+                return false;
+            }
+
+            var role = GetRole();
+            return role == Role.Admin || role == Role.SuperAdmin;
+
+            //return IsAuthenticated() ? GetRole() == Role.Admin : false;
+
         }
 
 

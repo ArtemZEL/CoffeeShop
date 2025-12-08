@@ -34,6 +34,7 @@ builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
 builder.Services.AddScoped<ICoffeShopPermision, CoffeShopPermision>();
 builder.Services.AddScoped<IProfileFileService, ProfileFileService>();
+builder.Services.AddScoped<ISliderFileServices, SliderFileServices>();
 builder.Services.AddScoped<UserCommentsRepository>();
 builder.Services.AddScoped<AuthService>();
 

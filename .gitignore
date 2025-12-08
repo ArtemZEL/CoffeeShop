@@ -364,4 +364,6 @@ FodyWeavers.xsd
 
 #Not needed files on projects 
 WebProject/wwwroot/image/avatar/*
+
+#Do need default avatar image
 !WebProject/wwwroot/image/avatar/defaultAvatar.jpg

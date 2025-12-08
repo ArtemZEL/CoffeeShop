@@ -82,7 +82,7 @@ namespace WebProject.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync().Wait();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "CoffeShop");
         }
 
         public IActionResult Forbid()
