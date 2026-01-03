@@ -1,0 +1,22 @@
+﻿@using WebProject.Models.Users
+@model List<AllUsersAndProfileViewModel>
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<div>
+    @foreach (var user in Model)
+    {
+        <div class="products-container">
+            <div class="box">
+                <img src="/image/avatar/@(user.Id).jpg" />
+                <p>@user.Name</p>
+            </div>
+            <div class="content">
+                <a href="/AdminPage/DeleteAvatarsUser?userId=@user.Id">Delete Image</a>
+            </div>
+        </div>
+    }
+
+
+</div>

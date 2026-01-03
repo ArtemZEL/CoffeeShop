@@ -10,19 +10,29 @@
 
 <div>
     Hello @(Auth.IsAuthenticated() ? Auth.GetUserName() : "Guest")
-    <div>
-        <a href="/AdminPage/AddPageCoffee">
-            @AdminPage.Index_Button_Add
-        </a>
-    </div>
-    <div>
-        <a href="/AdminPage/AddingCoffee">
-            @AdminPage.Index_Button_Adding_Coffee
-        </a>
-    </div>
-    <div>
-        <a href="/AdminPage/AddCategory">
-            @AdminPage.Index_Button_Adding_Category
-        </a>
-    </div>
+    
+    @if (Auth.IsAdmin())
+    {
+        <div>
+            <a href="/AdminPage/AddPageCoffee">
+                @AdminPage.Index_Button_Add
+            </a>
+        </div>
+        <div>
+            <a href="/AdminPage/AddingCoffee">
+                @AdminPage.Index_Button_Adding_Coffee
+            </a>
+        </div>
+        <div>
+            <a href="/AdminPage/AddCategory">
+                @AdminPage.Index_Button_Adding_Category
+            </a>
+        </div>
+        <div>
+            <a href="/AdminPage/AllAvatarsUser">
+                All User 
+            </a>
+        </div>
+    }
+    
 </div>

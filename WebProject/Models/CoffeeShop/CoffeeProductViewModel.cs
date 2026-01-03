@@ -19,5 +19,6 @@ namespace WebProject.Models
         //if This user add product here deleting  
         public bool CanDelete { get; set; }
         public List<SelectListItem> CategoryNameList { get; set; } = new List<SelectListItem>();
+        public List<string> GalleryImages { get; set; } = new List<string>();
     }
 }

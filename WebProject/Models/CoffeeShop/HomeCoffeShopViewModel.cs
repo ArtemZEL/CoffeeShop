@@ -6,5 +6,7 @@ namespace WebProject.Models
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public int Age { get; set; }
+
+        public List<string> ImageFon { get; set; } = new List<string>();
     }
 }

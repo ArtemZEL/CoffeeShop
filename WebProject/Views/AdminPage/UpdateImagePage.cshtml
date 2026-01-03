@@ -1,0 +1,21 @@
+﻿@model CoffeeProductViewModel
+
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<div>
+    <h2>Update Picture</h2>
+    <form method="post" action="/AdminPage/UpdateImagePage" enctype="multipart/form-data">
+        <input type="file" name="pageimage" value="" />
+        <button class="btn">Add New Slide Image</button>
+    </form>
+</div>
+
+<div>
+    <a href="/AdminPage/ManageGallery" class="btn">
+        Slider Image
+    </a>
+
+    <a href="/User/" class="btn">Get Back</a>
+</div>
