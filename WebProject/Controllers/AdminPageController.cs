@@ -53,7 +53,6 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
-        
         public IActionResult AddingCoffee()
         {
 
@@ -88,10 +87,7 @@ namespace WebProject.Controllers
         }
 
         //Add Coffee
-
-
         [HttpGet]
-
         public IActionResult AddPageCoffee()
         {
             var categories = _categoryRepository.GetAll();
