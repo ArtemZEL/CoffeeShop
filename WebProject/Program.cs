@@ -38,6 +38,10 @@ builder.Services.AddScoped<ISliderFileServices, SliderFileServices>();
 builder.Services.AddScoped<UserCommentsRepository>();
 builder.Services.AddScoped<AuthService>();
 
+
+
+
+
 builder.Services.AddHttpContextAccessor();
 
 
