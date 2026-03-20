@@ -1,4 +1,4 @@
-﻿@model WebProject.Models.CoffeShopViewModel
+@model WebProject.Models.CoffeShopViewModel
 @using WebProject.Service
 @inject AuthService Auth
 <!DOCTYPE html>
@@ -70,8 +70,36 @@
     </section>
     <!-- About -->
     <section class="about" id="about">
+        @{
+            var sliderImages = Model.LayoutModelUser?.ImageFon ?? new List<string>();
+        }
         <div class="about-img">
-            <img src="/image/about.jpg" alt="" />
+            @if (sliderImages.Count > 0)
+            {
+                <div id="aboutCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for (int i = 0; i < sliderImages.Count; i++)
+                        {
+                            var img = sliderImages[i];
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img src="@img" class="d-block w-100 rounded" alt="coffee image @(i + 1)" />
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Назад</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#aboutCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Вперёд</span>
+                    </button>
+                </div>
+            }
+            else
+            {
+                <img src="~/image/about.jpg" alt="" />
+            }
         </div>
         <div class="about-text">
             <h2>Our History</h2>

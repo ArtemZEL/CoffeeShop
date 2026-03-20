@@ -5,6 +5,7 @@ using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Models;
+using WebProject.Service.Flie;
 
 namespace WebProject.Controllers
 {
@@ -17,13 +18,19 @@ namespace WebProject.Controllers
         private readonly ICoffeeRepository _coffeeRepository;
         private readonly UserCommentsRepository _userCommentsRepository;
         private WebProjectContext _webProjectContext;
+        private readonly ISliderFileServices _sliderFileServices;
 
 
-        public CoffeShopController(ICoffeeRepository coffeeRepository, UserCommentsRepository userCommentsRepository, WebProjectContext webProjectContext)
+        public CoffeShopController(
+            ICoffeeRepository coffeeRepository,
+            UserCommentsRepository userCommentsRepository,
+            WebProjectContext webProjectContext,
+            ISliderFileServices sliderFileServices)
         {
             _coffeeRepository = coffeeRepository;
             _userCommentsRepository = userCommentsRepository;
             _webProjectContext = webProjectContext;
+            _sliderFileServices = sliderFileServices;
         }
         [AllowAnonymous]
         public IActionResult Index()
@@ -43,7 +50,12 @@ namespace WebProject.Controllers
                     Name = u.Name,
                     Img = u.Img,
                     Comments = u.Comments
-                }).ToList()
+                }).ToList(),
+
+                LayoutModelUser = new HomeCoffeShopViewModel
+                {
+                    ImageFon = _sliderFileServices.GetFonGallery()
+                }
             };
 
             return View(model);

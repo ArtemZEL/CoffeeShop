@@ -9,7 +9,7 @@
             _webHostEnvironment = webHostEnvironment;
         }
 
-        private const string FON_IMG_FOLDER = "images/slider";
+        private const string FON_IMG_FOLDER = "image/slider";
         private const string DEFAUL_IMG = "default.jpg";
         private const long MAX_FILE_SIZE = 5 * 1024 * 1024; //5MB Files
         private static readonly string[] ALLOWED_EXTENSIONS = { ".jpg", ".jpeg", ".png" };
