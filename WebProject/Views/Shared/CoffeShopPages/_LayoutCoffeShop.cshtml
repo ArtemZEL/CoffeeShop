@@ -1,5 +1,6 @@
 @model WebProject.Models.CoffeShopViewModel
 @using WebProject.Service
+@using WebProject.Enum
 @inject AuthService Auth
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +32,20 @@
             <li><a href="#customers">Customers</a></li>
         </ul>
         <div class="header-icon">
+            @if (Auth.IsAuthenticated())
+            {
+                var currentLang = Auth.GetLanguage();
+                <div class="lang-switch" role="group" aria-label="Язык">
+                    <a class="lang-btn @(currentLang == Language.English ? "lang-btn--active" : "")"
+                       asp-controller="User"
+                       asp-action="ChangeLanguage"
+                       asp-route-language="@Language.English">EN</a>
+                    <a class="lang-btn @(currentLang == Language.Russian ? "lang-btn--active" : "")"
+                       asp-controller="User"
+                       asp-action="ChangeLanguage"
+                       asp-route-language="@Language.Russian">RU</a>
+                </div>
+            }
             <i class="bx bxs-cart" id="cart-icons"></i>
             <i class="bx bx-search" id="search-icon"></i>
             @if (Auth.IsAuthenticated())

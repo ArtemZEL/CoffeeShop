@@ -88,6 +88,69 @@ header.shadow {
   color: var(--second-color);
 }
 
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 0.35rem;
+  margin-right: 0.15rem;
+}
+
+
+.header-icon a.lang-btn,
+.header-icon a.lang-btn:link,
+.header-icon a.lang-btn:visited,
+.header-icon a.lang-btn:active {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.35rem;
+  padding: 0.28rem 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text-color);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: 0.2s all linear;
+  text-decoration: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header-icon a.lang-btn:hover {
+  background: var(--text-color);
+  color: var(--second-color);
+  border-color: var(--text-color);
+}
+
+.header-icon a.lang-btn:focus {
+  outline: none;
+}
+
+.header-icon a.lang-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.75);
+  outline-offset: 2px;
+  color: var(--text-color);
+}
+
+.header-icon a.lang-btn.lang-btn--active,
+.header-icon a.lang-btn.lang-btn--active:link,
+.header-icon a.lang-btn.lang-btn--active:visited,
+.header-icon a.lang-btn.lang-btn--active:active {
+  background: var(--text-color);
+  color: var(--second-color);
+  border-color: var(--text-color);
+}
+
+.header-icon a.lang-btn.lang-btn--active:hover {
+  background: var(--text-color);
+  color: var(--second-color);
+  border-color: var(--text-color);
+}
+
 #menu-icons {
   color: var(--text-color);
   font-size: 24px;
@@ -448,6 +511,11 @@ header.shadow {
 }
 
 @media (max-width: 768px) {
+  .header-icon .lang-btn {
+    min-width: 2rem;
+    padding: 0.22rem 0.38rem;
+    font-size: 0.68rem;
+  }
   .logo img {
     width: 60px;
   }
