@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebProject.Controllers.CustomAuthorizeAttributtes;
@@ -69,7 +69,7 @@ namespace WebProject.Controllers
                     Img = db.Img,
                     Cell = db.Cell,
                     AuthorName = db.AuthorAdd?.UserName ?? "No author",
-                    CanDelete = _coffeShopPermision.CanFindPage(db),
+                    CanFindPage = _coffeShopPermision.CanFindPage(db),
                     CategoryId = db.CategoryId,
                     CategoryName = db.Category != null ? db.Category.Name : "No category"
                 }).ToList(),
@@ -82,7 +82,13 @@ namespace WebProject.Controllers
         //Remove Coffee
         public IActionResult RemoveCoffee(int id)
         {
-            _repositoryCoffee.Remove(id);
+            var coffee = _repositoryCoffee.GetFirstById(id);
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
+
+            _repositoryCoffee.Remove(coffee);
             return RedirectToAction("AddingCoffee");
         }
 
@@ -162,6 +168,10 @@ namespace WebProject.Controllers
             {
                 return NotFound();
             }
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
             var categories = _categoryRepository.GetAll();
             var viewModel = new CoffeeProductViewModel
             {
@@ -188,6 +198,10 @@ namespace WebProject.Controllers
             if (existingCoffee == null)
             {
                 return NotFound();
+            }
+            if (!_coffeShopPermision.CanFindPage(existingCoffee))
+            {
+                return Forbid();
             }
 
             existingCoffee.Name = productViewModel.Name;

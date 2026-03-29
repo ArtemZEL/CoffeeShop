@@ -23,7 +23,7 @@
                     <p class="author">Category: @coffee.CategoryName</p>
                     <div class="content">
                         <span>$@coffee.Cell</span>
-                        @if (coffee.CanDelete)
+                        @if (coffee.CanFindPage)
                         {
                             <a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>               
                             <a href="/AdminPage/EditCoffee?id=@coffee.Id">Edit</a>

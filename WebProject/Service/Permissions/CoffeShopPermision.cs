@@ -1,4 +1,4 @@
-﻿using WebProject.DBStuff.Models.CoffeShop;
+using WebProject.DBStuff.Models.CoffeShop;
 using WebProject.Enum;
 
 namespace WebProject.Service.Permissions
@@ -19,14 +19,12 @@ namespace WebProject.Service.Permissions
                 return false;
             }
             var user = _authService.GetUser();
-            if (user.Role == Role.Admin ||
-                user.Role == Role.SuperAdmin)
+            if (user.Role == Role.SuperAdmin)
             {
                 return true;
-
             }
-
-            return coffeeProduct.AuthorAdd?.Id == user.Id;
+            var authorId = coffeeProduct.AuthorAdd?.Id ?? coffeeProduct.AuthorId;
+            return authorId == user.Id;
         }
 
 
