@@ -8,6 +8,7 @@ using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Enum;
 using WebProject.Models;
+using WebProject.Models.CoffeeShop;
 using WebProject.Models.Users;
 using WebProject.Service;
 using WebProject.Service.Flie;
@@ -262,6 +263,22 @@ namespace WebProject.Controllers
                 _sliderFileServices.RemoveImageSlider(fileName);
             }
             return RedirectToAction("ManageGallery");
+        }
+
+
+        //[Role(Role.Admin)]
+        public IActionResult CoffeeStatistics()
+        {
+            var coffeeDetails = _repositoryCoffee.GetCoffeeDetail();
+            var coffeeSummary = _repositoryCoffee.GetCoffeeSummary();
+
+            var model = new CoffeeStatisticsViewModel
+            {
+                CoffeDetails = coffeeDetails,
+                CoffeeSummary = coffeeSummary
+            };
+
+            return View(model);
         }
 
     }

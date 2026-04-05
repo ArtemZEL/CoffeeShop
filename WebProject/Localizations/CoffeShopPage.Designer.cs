@@ -22,14 +22,14 @@ namespace WebProject.Localizations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AdminPage {
+    public class CoffeShopPage {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AdminPage() {
+        internal CoffeShopPage() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WebProject.Localizations {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebProject.Localizations.AdminPage", typeof(AdminPage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebProject.Localizations.CoffeShopPage", typeof(CoffeShopPage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,74 @@ namespace WebProject.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Coffee.
+        ///   Looks up a localized string similar to About Us.
         /// </summary>
-        public static string Index_Button_Add {
+        public static string Index_AboutUs {
             get {
-                return ResourceManager.GetString("Index_Button_Add", resourceCulture);
+                return ResourceManager.GetString("Index_AboutUs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Category.
+        ///   Looks up a localized string similar to Customers.
         /// </summary>
-        public static string Index_Button_Adding_Category {
+        public static string Index_Customers {
             get {
-                return ResourceManager.GetString("Index_Button_Adding_Category", resourceCulture);
+                return ResourceManager.GetString("Index_Customers", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adding Your Coffee.
+        ///   Looks up a localized string similar to Home.
         /// </summary>
-        public static string Index_Button_Adding_Coffee {
+        public static string Index_HomeBtn {
             get {
-                return ResourceManager.GetString("Index_Button_Adding_Coffee", resourceCulture);
+                return ResourceManager.GetString("Index_HomeBtn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All User.
+        ///   Looks up a localized string similar to Our History.
         /// </summary>
-        public static string Index_Button_All_User {
+        public static string Index_OurHistory {
             get {
-                return ResourceManager.GetString("Index_Button_All_User", resourceCulture);
+                return ResourceManager.GetString("Index_OurHistory", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Slider Page.
+        ///   Looks up a localized string similar to Product.
         /// </summary>
-        public static string Index_Button_Slider {
+        public static string Index_Product {
             get {
-                return ResourceManager.GetString("Index_Button_Slider", resourceCulture);
+                return ResourceManager.GetString("Index_Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string Index_Search {
+            get {
+                return ResourceManager.GetString("Index_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start your day with aromatic tropical coffee.
+        /// </summary>
+        public static string Index_Slogan {
+            get {
+                return ResourceManager.GetString("Index Slogan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support.
+        /// </summary>
+        public static string Index_Support {
+            get {
+                return ResourceManager.GetString("Index_Support", resourceCulture);
             }
         }
     }

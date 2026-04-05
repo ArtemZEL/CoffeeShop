@@ -30,7 +30,6 @@ namespace WebProject.Service
         public UserDB GetUser()
         {
             return _userRepository.GetFirstById(GetId());
-
         }
 
         public bool IsAuthenticated()
@@ -63,12 +62,14 @@ namespace WebProject.Service
 
         public Language GetLanguage()
         {
-            return (Language)int.Parse(_contextAccessor.HttpContext
-                .User
-                .Claims
-                .First(x => x.Type == "Language")
-                .Value
-                );
+            //return (Language)int.Parse(_contextAccessor.HttpContext
+            //    .User
+            //    .Claims
+            //    .First(x => x.Type == "Language")
+            //    .Value
+            //    );
+
+            return GetUser().Language;
         }
 
         public bool IsAdmin()

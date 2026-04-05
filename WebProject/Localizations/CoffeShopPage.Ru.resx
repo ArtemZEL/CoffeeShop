@@ -117,19 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Index_Button_Add" xml:space="preserve">
-    <value>Добавить кофе</value>
+  <data name="Index Slogan" xml:space="preserve">
+    <value>Начните свой день с ароматного тропического кофе</value>
   </data>
-  <data name="Index_Button_Adding_Category" xml:space="preserve">
-    <value>Добавить категорию</value>
+  <data name="Index_AboutUs" xml:space="preserve">
+    <value>О нас</value>
   </data>
-  <data name="Index_Button_Adding_Coffee" xml:space="preserve">
-    <value>Добавленные кофе </value>
+  <data name="Index_Customers" xml:space="preserve">
+    <value>Отзывы</value>
   </data>
-  <data name="Index_Button_All_User" xml:space="preserve">
-    <value>Добавленные пользователи</value>
+  <data name="Index_HomeBtn" xml:space="preserve">
+    <value>Главная</value>
   </data>
-  <data name="Index_Button_Slider" xml:space="preserve">
-    <value>Добавленные слайд изображения</value>
+  <data name="Index_OurHistory" xml:space="preserve">
+    <value>Наша история</value>
+  </data>
+  <data name="Index_Product" xml:space="preserve">
+    <value>Товары</value>
+  </data>
+  <data name="Index_Search" xml:space="preserve">
+    <value>Поиск...</value>
+  </data>
+  <data name="Index_Support" xml:space="preserve">
+    <value>Поддержка</value>
   </data>
 </root>

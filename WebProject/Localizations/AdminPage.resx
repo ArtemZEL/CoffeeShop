@@ -126,4 +126,10 @@
   <data name="Index_Button_Adding_Coffee" xml:space="preserve">
     <value>Adding Your Coffee</value>
   </data>
+  <data name="Index_Button_All_User" xml:space="preserve">
+    <value>All User</value>
+  </data>
+  <data name="Index_Button_Slider" xml:space="preserve">
+    <value>Slider Page</value>
+  </data>
 </root>
