@@ -34,6 +34,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AdminPage.resx</DependentUpon>
     </Compile>
+    <Compile Update="Localizations\CoffeShopPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CoffeShopPage.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -41,9 +46,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AdminPage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\CoffeShopPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CoffeShopPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DBStuff\RAWSql\" />
     <Folder Include="wwwroot\image\avatar\" />
   </ItemGroup>
 

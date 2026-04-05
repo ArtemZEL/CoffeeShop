@@ -1,6 +1,7 @@
 @model WebProject.Models.CoffeShopViewModel
 @using WebProject.Service
 @using WebProject.Enum
+@using WebProject.Localizations
 @inject AuthService Auth
 <!DOCTYPE html>
 <html lang="en">
@@ -26,10 +27,10 @@
 
         <i class="bx bx-menu" id="menu-icons"></i>
         <ul class="navbar">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#products">Product</a></li>
-            <li><a href="#customers">Customers</a></li>
+            <li><a href="#home">@CoffeShopPage.Index_HomeBtn</a></li>
+            <li><a href="#about">@CoffeShopPage.Index_AboutUs</a></li>
+            <li><a href="#products">@CoffeShopPage.Index_Product</a></li>
+            <li><a href="#customers">@CoffeShopPage.Index_Customers</a></li>
         </ul>
         <div class="header-icon">
             @if (Auth.IsAuthenticated())
@@ -64,14 +65,13 @@
         </div>
         <!-- Search -->
         <div class="search-box">
-            <input type="search" name="" id="" placeholder="Search Here..." />
+            <input type="search" name="" id="" placeholder=@CoffeShopPage.Index_Search />
         </div>
     </header>
     <section class="home" id="home">
         <div class="home-text">
             <h1>
-                Start your day with <br />
-                aromatic tropical coffee
+                @CoffeShopPage.Index_Slogan
             </h1>
             <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur
@@ -117,7 +117,7 @@
             }
         </div>
         <div class="about-text">
-            <h2>Our History</h2>
+            <h2>@CoffeShopPage.Index_OurHistory</h2>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem et ipsum
                 aperiam ullam corrupti eveniet, architecto doloribus non fuga
@@ -153,10 +153,9 @@
             </div>
         </div>
         <div class="footer-box">
-            <h3>Support</h3>
+            <h3>@CoffeShopPage.Index_Support</h3>
             <li><a href="#">Product</a></li>
-            <li><a href="#">Return Polict</a></li>
-            <li><a href="#">About Us</a></li>
+            <li><a href="#">@CoffeShopPage.Index_AboutUs</a></li>
             <li><a href="#">Help and Support</a></li>
         </div>
         <div class="footer-box">
@@ -175,7 +174,7 @@
         </div>
     </section>
     <div class="copyright">
-        <p>&#169; 2025 TropCoffee. All rights reserved.</p>
+        <p>&#169; @DateTime.Now.Year TropCoffee. All rights reserved.</p>
     </div>
     <!-- Add script  -->
     <script src="~/js/coffeshop/script.js"></script>
