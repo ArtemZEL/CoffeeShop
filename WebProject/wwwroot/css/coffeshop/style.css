@@ -378,6 +378,10 @@ header.shadow {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.products-container .box .content span.cell.dell {
+  background: red;
+}
+
 .products-container .box .content a {
   padding: 0 1rem;
   color: var(--test-color);
