@@ -5,6 +5,11 @@
     Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
 }
 
+@section Scripts {
+    <script src="/js/coffeshop/CoffeePage.js"></script>
+}
+
+
 <section class="products" id="products">
     <div class="heading">
         <a class = "" href="/CoffeShop/LoginPageTest"></a>
@@ -18,11 +23,11 @@
             {
                 <div class="box">
                     <img src="@coffee.Img" alt="@coffee.Name" />
-                    <h3>@coffee.Name</h3>
+                    <h3 class="name-products">@coffee.Name</h3>
                     <p class="author">Added by: @coffee.AuthorName</p>
-                    <p class="author">Category: @coffee.CategoryName</p>
+                    <p class="category">Category: @coffee.CategoryName</p>
                     <div class="content">
-                        <span>$@coffee.Cell</span>
+                        <span class="cell">$@coffee.Cell</span>
                         @if (coffee.CanFindPage)
                         {
                             <a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>               
