@@ -16,7 +16,6 @@ namespace WebProject.DBStuff.Repositories
             throw new Exception("Do not use Add.User Registration method");
         }
 
-
         public UserDB Login(string userName, string password)
         {
             var hashPassword = HashPassword(password);
@@ -46,10 +45,14 @@ namespace WebProject.DBStuff.Repositories
             _portalContext.SaveChanges();
         }
 
-
         private string HashPassword(string password)
         {
             return password.Replace("d", "") + password.Length;
+        }
+
+        public UserDB? GetByName(string name)
+        {
+            return _dbSet.Where(x => x.UserName == name).FirstOrDefault(); // If the user registers again
         }
 
     }

@@ -6,5 +6,6 @@ namespace WebProject.DBStuff.Repositories.Interface
     {
         UserDB Login(string userName, string password);
         void Registration(string userName, string password, string email);
+        UserDB? GetByName(string name);
     }
 }
