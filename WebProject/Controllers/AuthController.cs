@@ -72,6 +72,12 @@ namespace WebProject.Controllers
         [HttpPost]
         public IActionResult Registration(AuthViewModel authViewModel)
         {
+            var user = _userRepository.GetByName(authViewModel.UserName);
+            if (user is not null) 
+            { 
+                return View(authViewModel);
+            }
+
             _userRepository.Registration(
                 authViewModel.UserName,
                 authViewModel.Password,
@@ -79,6 +85,13 @@ namespace WebProject.Controllers
 
             return Login(authViewModel);               
         }
+        public IActionResult IsUniqName(string name) 
+        {
+            Thread.Sleep(1000);
+            var isUniq = _userRepository.GetByName(name) == null;
+            return Json(isUniq);
+        }
+
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync().Wait();

@@ -7,12 +7,13 @@
 
 @section Scripts {
     <script src="/js/coffeshop/CoffeePage.js"></script>
+    <script src="/js/coffeshop/editCoffe.js"></script>
 }
 
 
 <section class="products" id="products">
     <div class="heading">
-        <a class = "" href="/CoffeShop/LoginPageTest"></a>
+        <a class="" href="/CoffeShop/LoginPageTest"></a>
         <h2>Product's page'</h2>
     </div>
 
@@ -21,16 +22,32 @@
         {
             foreach (var coffee in Model.CoffeeProducts)
             {
-                <div class="box">
+                <div class="box" data-id="@coffee.Id">
                     <img src="@coffee.Img" alt="@coffee.Name" />
-                    <h3 class="name-products">@coffee.Name</h3>
+                    <h3>
+                        @if (coffee.CanFindPage)
+                        {
+                            <div class="editable-title">
+                                <span class="view mode">@coffee.Name</span>
+                                <input class="edit mode hidden" name="name" />
+                                <button class="delete-btn" name="deletePage">X</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="editable-title">
+                                <span class="">@coffee.Name</span>
+                            </div>
+                        }
+                    
+                    </h3>
                     <p class="author">Added by: @coffee.AuthorName</p>
                     <p class="category">Category: @coffee.CategoryName</p>
                     <div class="content">
                         <span class="cell">$@coffee.Cell</span>
                         @if (coffee.CanFindPage)
                         {
-                            <a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>               
+                            //<a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>
                             <a href="/AdminPage/EditCoffee?id=@coffee.Id">Edit</a>
                         }
                         @**@

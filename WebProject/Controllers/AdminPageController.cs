@@ -281,5 +281,34 @@ namespace WebProject.Controllers
             return View(model);
         }
 
+        //Test AJAX method the next update deleting 
+        [HttpPost]
+        public IActionResult EdditCoffeeName(int id, string name)
+        {
+            var coffeProduct = _repositoryCoffee.GetFirstById(id);
+            if (coffeProduct == null)
+            {
+                return Json(new { success = false, message = "Продукт не найден" });
+            }
+
+            var user = _authService.GetUser();
+            if (coffeProduct.AuthorAdd != user)
+            {
+                return Json(false);
+            }
+
+            coffeProduct.Name = name;
+            _repositoryCoffee.Update(coffeProduct);
+
+            return Json(true);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveCoffeJs(int id)
+        {
+            _repositoryCoffee.Remove(id);
+            return Json(new { success = true });
+        }
+
     }
 }
