@@ -1,4 +1,4 @@
-﻿@inject WebProject.Service.AuthService authService
+﻿@inject WebProject.Service.IAuthService authService
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,6 +67,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @* test websocket delete the next commit *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="~/js/common_con.js"></script>
+    <script src="~/js/home/notification.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

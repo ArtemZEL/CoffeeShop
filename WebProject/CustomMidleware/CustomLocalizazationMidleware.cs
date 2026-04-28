@@ -16,7 +16,7 @@ namespace WebProject.CustomMidleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var authService = context.RequestServices.GetService<AuthService>();
+            var authService = context.RequestServices.GetService<IAuthService>();
             if (authService.IsAuthenticated())
             {
                 var language = authService.GetLanguage();

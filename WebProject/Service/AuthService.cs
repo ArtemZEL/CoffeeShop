@@ -6,7 +6,7 @@ using WebProject.Models.Home;
 
 namespace WebProject.Service
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private IHttpContextAccessor _contextAccessor;
         private IUserRepository _userRepository;
@@ -18,7 +18,7 @@ namespace WebProject.Service
 
         public int GetId()
         {
-           var httpContext = _contextAccessor.HttpContext;
+            var httpContext = _contextAccessor.HttpContext;
             return int.Parse(httpContext
                 .User
                 .Claims
@@ -51,9 +51,9 @@ namespace WebProject.Service
         public string GetUserName()
         {
             if (!IsAuthenticated())
-            { 
-                    return "";
-            }    
+            {
+                return "";
+            }
             var claim = _contextAccessor.HttpContext.User.Claims
                 .FirstOrDefault(x => x.Type == "UserName");
 

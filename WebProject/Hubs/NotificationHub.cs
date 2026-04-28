@@ -1,0 +1,38 @@
+﻿using Microsoft.AspNetCore.SignalR;
+using WebProject.Service;
+using static WebProject.Hubs.NotificationHub;
+
+namespace WebProject.Hubs
+{
+    public class NotificationHub : Hub<INotificationHub>
+    {
+        private IAuthService _authService;
+
+        public NotificationHub(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
+        public override Task OnConnectedAsync()
+        {
+            return base.OnConnectedAsync();
+        }
+
+        public void NotificAll(string message)
+        {
+            var userName = _authService.IsAuthenticated()
+                ? _authService.GetUserName() 
+                : "Guess";
+
+            Clients.All
+                .NewNotification($"{userName} {message}") 
+                .Wait();
+        }
+
+        public interface INotificationHub
+        {
+            Task NewNotification(string message);
+        }
+
+    }
+}
