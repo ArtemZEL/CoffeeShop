@@ -3,27 +3,29 @@ $(document).ready(function () {
     const hub = new signalR.HubConnectionBuilder().withUrl(url).build();
 
     hub.on("NewNotification", function (message) {
-        const notificationTag = $('.notification.template').clone();
-        notificationTag.removeClass('template');
+        const notificationTag = $(".messagenotification.templates").clone();
+        notificationTag.removeClass("templates");   // убираем скрывающий класс
         notificationTag.text(message);
-        notificationTag.click(onNotificationClick);
 
-        $('.notification-content').append(notificationTag);
-        console.log(message)
-    })
+        $(".notificationcoffe-container").append(notificationTag);
 
-    function onNotificationClick(){
-        $(this).remove();
+        setTimeout(() => notificationTag.addClass("show"), 10);
+
+        setTimeout(() => {
+            hideNotification(notificationTag);
+        }, 5000);
+
+        notificationTag.click(() => hideNotification(notificationTag));
+    });
+
+    function hideNotification(el) {
+        el.removeClass("show");
+        setTimeout(() => el.remove(), 500); 
     }
 
+    hub.start();
 
-
-    //open websocket to server 
-    hub.start()
-
-    $('footer').click(function(){
-        hub.invoke("NotificAll","Click footer test")
-    })
-
-
+    $("#cart-icons").click(function () {
+        hub.invoke("NotifyAll", "wants to make a purchase");
+    });
 });

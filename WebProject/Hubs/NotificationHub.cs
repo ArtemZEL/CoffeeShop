@@ -19,7 +19,7 @@ namespace WebProject.Hubs
             return base.OnConnectedAsync();
         }
 
-        public void NotificAll(string message)
+        public void NotifyAll(string message)
         {
             var userName = _authService.IsAuthenticated()
                 ? _authService.GetUserName() 
