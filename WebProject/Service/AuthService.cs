@@ -37,7 +37,7 @@ namespace WebProject.Service
             return _contextAccessor.HttpContext!.User?.Identity?.IsAuthenticated ?? false;
         }
 
-        internal Role GetRole()
+        public Role GetRole()
         {
             var httpContext = _contextAccessor.HttpContext;
             return (Role)int.Parse(httpContext

@@ -55,10 +55,12 @@ TemporaryDependencyNodeTargetIdentifier=net8.0
 [sourceFiles]
 Controllers/
  AdminPageController.cs
+ APIControllers/NotificationApiController.cs
  AuthController.cs
  CoffeShopController.cs
  CustomAuthorizeAttributtes/RoleAttribute.cs
  HomeController.cs
+ NotificationController.cs
  UserController.cs
 CustomMidleware/CustomLocalizazationMidleware.cs
 DBStuff/Models/
@@ -518,6 +520,7 @@ Views/
  Home/
   Index.cshtml
   Privacy.cshtml
+ Notification/Index.cshtml
  Shared/CoffeShopPages/
   _LayoutCoffeShop.cshtml
   _LayoutCoffeShopTestPage.cshtml
@@ -554,6 +557,7 @@ Views/
  Home/
   Index.cshtml
   Privacy.cshtml
+ Notification/Index.cshtml
  Shared/CoffeShopPages/
   _LayoutCoffeShop.cshtml
   _LayoutCoffeShopTestPage.cshtml

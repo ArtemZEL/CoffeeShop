@@ -7,6 +7,7 @@ namespace WebProject.Service
     {
         int GetId();
         Language GetLanguage();
+        Role GetRole();
         UserDB GetUser();
         string GetUserName();
         bool IsAdmin();

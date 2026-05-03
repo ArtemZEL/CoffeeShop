@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using WebProject.Service;
-using static WebProject.Hubs.NotificationHub;
+
+
 
 namespace WebProject.Hubs
 {
@@ -29,10 +30,12 @@ namespace WebProject.Hubs
                 .Wait();
         }
 
-        public interface INotificationHub
-        {
-            Task NewNotification(string message);
-        }
+       
 
+    }
+
+    public interface INotificationHub
+    {
+        Task NewNotification(string message);
     }
 }

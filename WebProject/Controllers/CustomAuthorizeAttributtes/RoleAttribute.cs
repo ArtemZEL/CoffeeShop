@@ -22,7 +22,7 @@ namespace WebProject.Controllers.CustomAuthorizeAttributtes
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var authService = context.HttpContext.RequestServices.GetRequiredService<AuthService>();
+            var authService = context.HttpContext.RequestServices.GetRequiredService<IAuthService>();
 
             if (!authService.IsAuthenticated())
             {
