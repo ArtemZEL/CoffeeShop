@@ -5,9 +5,9 @@ namespace WebProject.Service.Permissions
 {
     public class CoffeShopPermision : ICoffeShopPermision
     {
-        private AuthService _authService;
+        private readonly IAuthService _authService;
 
-        public CoffeShopPermision(AuthService authService)
+        public CoffeShopPermision(IAuthService authService)
         {
             _authService = authService;
         }

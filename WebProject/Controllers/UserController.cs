@@ -15,11 +15,11 @@ namespace WebProject.Controllers
     public class UserController : Controller
     {
         private IUserRepository _userRepository;
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
         private IWebHostEnvironment _webHostEnvironment;
         private IProfileFileService _profileFileService;
 
-        public UserController(IUserRepository userRepository, AuthService authService, IWebHostEnvironment webHostEnvironment, IProfileFileService profileFileService)
+        public UserController(IUserRepository userRepository, IAuthService authService, IWebHostEnvironment webHostEnvironment, IProfileFileService profileFileService)
         {
             _userRepository = userRepository;
             _authService = authService;

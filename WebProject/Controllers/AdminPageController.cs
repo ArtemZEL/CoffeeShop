@@ -23,7 +23,7 @@ namespace WebProject.Controllers
         private readonly ICoffeeRepository _repositoryCoffee;
         private readonly ICategoryRepository _categoryRepository;
         private WebProjectContext _webProjectDBContext;
-        private AuthService _authService;
+        private IAuthService _authService;
         private ICoffeShopPermision _coffeShopPermision;
         private IProfileFileService _profileFileService;
         private IUserRepository _userRepository;
@@ -32,7 +32,7 @@ namespace WebProject.Controllers
         public AdminPageController(ICoffeeRepository repository, 
             WebProjectContext webProjectDBContext, 
             ICategoryRepository categoryRepository, 
-            AuthService authService, 
+            IAuthService authService, 
             ICoffeShopPermision coffeShopPermision, 
             IProfileFileService profileFileService, 
             IUserRepository userRepository, 

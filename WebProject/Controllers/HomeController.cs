@@ -11,9 +11,9 @@ namespace WebProject.Controllers
     {
 
 
-        private AuthService _authService;
+        private readonly IAuthService _authService;
 
-        public HomeController(AuthService authService)
+        public HomeController(IAuthService authService)
         {
             _authService = authService;
         }

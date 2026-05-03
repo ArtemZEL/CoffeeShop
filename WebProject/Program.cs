@@ -4,6 +4,7 @@ using WebProject.CustomMidleware;
 using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
+using WebProject.Hubs;
 using WebProject.Service;
 using WebProject.Service.Flie;
 using WebProject.Service.Permissions;
@@ -28,6 +29,7 @@ builder.Services.AddDbContext<WebProjectContext>(
 );
 
 
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<ICoffeeRepository,CoffeeRepository>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
@@ -36,7 +38,7 @@ builder.Services.AddScoped<ICoffeShopPermision, CoffeShopPermision>();
 builder.Services.AddScoped<IProfileFileService, ProfileFileService>();
 builder.Services.AddScoped<ISliderFileServices, SliderFileServices>();
 builder.Services.AddScoped<UserCommentsRepository>();
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IAuthService,AuthService>();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -60,7 +62,7 @@ app.UseAuthorization();
 
 app.UseMiddleware<CustomLocalizazationMidleware>();
 
-
+app.MapHub<NotificationHub>("/hubs/notification");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

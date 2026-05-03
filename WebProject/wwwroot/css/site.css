@@ -20,3 +20,24 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.notification{
+  width: 300px;
+  background: black;
+  color: aliceblue;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 30px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.notification-content {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.notification.template{
+  display: none;
+}
