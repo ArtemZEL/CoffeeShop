@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebProject.DBStuff.Models.CoffeShop;
+using WebProject.DBStuff.Models.Notifications;
 
 namespace WebProject.DBStuff
 {
@@ -12,6 +13,7 @@ namespace WebProject.DBStuff
         public DbSet<UserDB> Users { get; set; }
         public DbSet<CategoryDB> Categories { get; set; }
 
+        public DbSet<Notification>  Notifications { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +23,18 @@ namespace WebProject.DBStuff
                 .WithOne(u => u.AuthorAdd)
                 .HasForeignKey(c => c.AuthorId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder
+                .Entity<Notification>()
+                .HasOne(x => x.Author)
+                .WithMany(x => x.CreatedNotificationMessage)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder
+                .Entity<Notification>()
+                .HasMany(x => x.UserWhoViewIt)
+                .WithMany(x => x.ViewNotification);
+
 
             base.OnModelCreating(modelBuilder);
         }
