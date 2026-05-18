@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebProject.DBStuff;
@@ -11,9 +12,11 @@ using WebProject.DBStuff;
 namespace WebProject.Migrations
 {
     [DbContext(typeof(WebProjectContext))]
-    partial class WebProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20260515195529_CreateNotification")]
+    partial class CreateNotification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
