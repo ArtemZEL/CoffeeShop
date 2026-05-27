@@ -404,8 +404,12 @@ header.shadow {
   display: none;
 }
 
-.view.mode{
-  cursor: pointer;
+.box.templatescoffee {
+    display: none;
+}
+
+.view.mode {
+    cursor: pointer;
 }
 
 .editable-title {

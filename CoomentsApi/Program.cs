@@ -14,10 +14,23 @@ builder.Services.AddDbContext<CoffeeDBContext>(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddScoped<NameTest>();
 builder.Services.AddScoped<CoffeeService>();
+
+//add acces on connection 
+builder.Services.AddCors(o =>
+{
+    o.AddDefaultPolicy(p =>
+    {
+        p.AllowAnyHeader();
+        p.AllowAnyMethod();
+        p.SetIsOriginAllowed(x => true);
+        p.AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
+app.UseCors();
 
 app.MapGet("/", () => "Hi this test API");
 
@@ -26,15 +39,18 @@ app.MapGet("/createcoffee/{name}/{url}/{category}", (string name, string url, st
    return id;    
 });
 
-
 app.MapGet("/getallcoffee", (CoffeeService name) => {
     return name.GetAllCoffee();
+});
+
+app.MapGet("/getNamecoffee", (CoffeeDBContext dbCont) =>
+{
+    return dbCont.Coffees.ToList();
 });
 
 
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
 
 app.Run();
