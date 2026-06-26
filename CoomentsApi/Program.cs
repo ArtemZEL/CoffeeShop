@@ -16,7 +16,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<CoffeeService>();
 
-
 //add acces on connection 
 builder.Services.AddCors(o =>
 {
