@@ -1,0 +1,133 @@
+services:
+
+  # ============================================
+  # PostgreSQL для MVC
+  # ============================================
+
+  postgres_mvc:
+    image: postgres:17
+    container_name: postgres_mvc
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: mvc_user
+      POSTGRES_PASSWORD: ${MVC_DB_PASSWORD}
+      POSTGRES_DB: MVCProjectDB
+
+    ports:
+      - "15433:5432"
+
+    volumes:
+      - postgres_mvc_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -h 127.0.0.1 -p 5432 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+
+  # ============================================
+  # PostgreSQL для API
+  # ============================================
+
+  postgres_api:
+    image: postgres:17
+    container_name: postgres_api
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: api_user
+      POSTGRES_PASSWORD: ${API_DB_PASSWORD}
+      POSTGRES_DB: APIProjectDB
+
+    ports:
+      - "15434:5432"
+
+    volumes:
+      - postgres_api_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -h 127.0.0.1 -p 5432 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+
+  # ============================================
+  # ASP.NET Core MVC
+  # ============================================
+
+  web_app:
+    build:
+      context: .
+      dockerfile: WebProject/Dockerfile
+
+    container_name: web_app
+    restart: unless-stopped
+
+    depends_on:
+      postgres_mvc:
+        condition: service_healthy
+        restart: true
+
+    ports:
+      - "5000:8080"
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: >-
+        Host=postgres_mvc;
+        Port=5432;
+        Database=MVCProjectDB;
+        Username=mvc_user;
+        Password=${MVC_DB_PASSWORD}
+
+
+  # ============================================
+  # ASP.NET Core API
+  # ============================================
+
+  api_app:
+    build:
+      context: .
+      dockerfile: CoomentsApi/Dockerfile
+
+    container_name: api_app
+    restart: unless-stopped
+
+    depends_on:
+      postgres_api:
+        condition: service_healthy
+        restart: true
+
+    ports:
+      - "6001:8080"
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: >-
+        Host=postgres_api;
+        Port=5432;
+        Database=APIProjectDB;
+        Username=api_user;
+        Password=${API_DB_PASSWORD}
+
+
+# ============================================
+# Постоянные тома PostgreSQL
+# ============================================
+
+volumes:
+  postgres_mvc_data:
+  postgres_api_data:
