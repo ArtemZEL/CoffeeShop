@@ -30,6 +30,12 @@ builder.Services.AddCors(o =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CoffeeDBContext>();
+    db.Database.Migrate();
+}
+
 app.UseCors();
 
 app.MapGet("/", () => "Hi this test API");

@@ -370,3 +370,10 @@ WebProject/wwwroot/js/common_con.js
 !WebProject/wwwroot/image/avatar/defaultAvatar.jpg
 #Do need default slider image
 !WebProject/wwwroot/image/slider/default.jpg
+
+*.env
+*docker-compose copy.yml 
+.vs/                 
+bin/                 
+obj/                     
+*.use
