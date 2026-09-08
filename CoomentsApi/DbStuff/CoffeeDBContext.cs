@@ -1,4 +1,5 @@
-﻿using CooffeeApi.DbStuff.Model;
+﻿using CoffeeApi.DbStuff.Model;
+using CooffeeApi.DbStuff.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace CooffeeApi.DbStuff
@@ -10,5 +11,6 @@ namespace CooffeeApi.DbStuff
         }
 
         public DbSet<CoffeeProduct> Coffees { get; set; }
+        public DbSet<UserComments> UserComments { get; set; }
     }
 }

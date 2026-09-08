@@ -38,7 +38,7 @@ builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<ICoffeShopPermision, CoffeShopPermision>();
 builder.Services.AddScoped<IProfileFileService, ProfileFileService>();
 builder.Services.AddScoped<ISliderFileServices, SliderFileServices>();
-builder.Services.AddScoped<UserCommentsRepository>();
+builder.Services.AddScoped<IUserCommentsRepository,UserCommentsRepository>();
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddHttpContextAccessor();
 

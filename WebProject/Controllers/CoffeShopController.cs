@@ -16,7 +16,7 @@ namespace WebProject.Controllers
         /// </summary>
         /// <returns></returns>
         private readonly ICoffeeRepository _coffeeRepository;
-        private readonly UserCommentsRepository _userCommentsRepository;
+        private readonly IUserCommentsRepository _userCommentsRepository;
         private WebProjectContext _webProjectContext;
         private readonly ISliderFileServices _sliderFileServices;
 
@@ -44,7 +44,7 @@ namespace WebProject.Controllers
                     Cell = x.Cell
                 }).ToList(),
 
-                UserComments = _webProjectContext.UserComments
+                UserComments = _userCommentsRepository.GetAll()
                 .Select(u => new UserCommentViewModel
                 {
                     Name = u.Name,
