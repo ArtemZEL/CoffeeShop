@@ -12,7 +12,6 @@ namespace WebProject.DBStuff
         public DbSet<UserCommentsDB> UserComments { get; set; }
         public DbSet<UserDB> Users { get; set; }
         public DbSet<CategoryDB> Categories { get; set; }
-
         public DbSet<Notification>  Notifications { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

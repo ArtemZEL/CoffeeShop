@@ -23,7 +23,7 @@ namespace WebProject.Controllers
 
         public CoffeShopController(
             ICoffeeRepository coffeeRepository,
-            UserCommentsRepository userCommentsRepository,
+            IUserCommentsRepository userCommentsRepository,
             WebProjectContext webProjectContext,
             ISliderFileServices sliderFileServices)
         {
