@@ -80,7 +80,7 @@ namespace WebProject.Service
             }
 
             var role = GetRole();
-            return role == Role.Admin || role == Role.SuperAdmin;
+            return role == Role.Admin || role == Role.SuperAdmin; //Next update fix moment with roles
 
             //return IsAuthenticated() ? GetRole() == Role.Admin : false;
 

@@ -5,6 +5,7 @@ using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Models;
+using WebProject.Models.Users;
 using WebProject.Service.Flie;
 
 namespace WebProject.Controllers

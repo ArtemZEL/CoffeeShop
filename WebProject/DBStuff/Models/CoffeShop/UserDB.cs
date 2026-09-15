@@ -12,7 +12,9 @@ namespace WebProject.DBStuff.Models.CoffeShop
         public string AvatarUrl { get; set; }
         public virtual List<CoffeeProductDB> CreatedCoffee {  get; set; } = new List<CoffeeProductDB>();
         public virtual List<Notification> CreatedNotificationMessage { get; set; } = new List<Notification>();    
-        public virtual List<Notification> ViewNotification{ get; set; } = new List<Notification>();    
+        public virtual List<Notification> ViewNotification{ get; set; } = new List<Notification>();
+
+        public virtual List<UserCommentsDB> Comments { get; set; } = new List<UserCommentsDB>();
 
         public Role Role { get; set; }
         public Language Language { get;  set; }

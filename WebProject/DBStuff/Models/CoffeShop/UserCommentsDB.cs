@@ -5,5 +5,8 @@
         public string Name { get; set; } = "Guest";
         public string Img { get; set; } = "/image/default.jpg";
         public string Comments { get; set; }
+        public int UserId { get; set; }
+        public virtual UserDB User { get; set; }
+
     }
 }

@@ -24,6 +24,13 @@ namespace WebProject.DBStuff
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder
+                .Entity<UserDB>()
+                .HasMany(u=>u.Comments)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder
                 .Entity<Notification>()
                 .HasOne(x => x.Author)
                 .WithMany(x => x.CreatedNotificationMessage)
@@ -33,7 +40,6 @@ namespace WebProject.DBStuff
                 .Entity<Notification>()
                 .HasMany(x => x.UserWhoViewIt)
                 .WithMany(x => x.ViewNotification);
-
 
             base.OnModelCreating(modelBuilder);
         }
