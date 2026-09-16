@@ -21,6 +21,8 @@
                   asp-action="Add"
                   method="post">
 
+                @Html.AntiForgeryToken()
+
                 <textarea asp-for="Comments"
                           placeholder="Write your comment..."
                           rows="3"></textarea>

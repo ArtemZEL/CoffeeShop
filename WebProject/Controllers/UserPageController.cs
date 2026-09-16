@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebProject.DBStuff;
 using WebProject.DBStuff.Models.CoffeShop;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Models.Users;
+using WebProject.Service;
 
 namespace WebProject.Controllers
 {
@@ -11,31 +11,18 @@ namespace WebProject.Controllers
     public class UserPageController : Controller
     {
         private readonly IUserCommentsRepository _userCommentsRepository;
-        private readonly WebProjectContext _dbContext;
-        public UserPageController(IUserCommentsRepository userCommentsRepository, WebProjectContext dbContext)
+        private readonly IAuthService _authService;
+
+        public UserPageController(IUserCommentsRepository userCommentsRepository, IAuthService authService)
         {
             _userCommentsRepository = userCommentsRepository;
-            _dbContext = dbContext;
-        }
-
-        private UserDB? GetCurrentUser()
-        {
-            var userName = User.Identity?.Name;
-
-            if (string.IsNullOrEmpty(userName))
-                return null;
-
-            return _dbContext.Users
-                .FirstOrDefault(x => x.UserName == userName);
+            _authService = authService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var user = GetCurrentUser();
-
-            if (user == null)
-                return NotFound();
+            var user = _authService.GetUser();
 
             var model = new UserPageViewModel
             {
@@ -61,14 +48,27 @@ namespace WebProject.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult AddComments()
+        {
+            var user = _authService.GetUser();
+
+            var model = new UserCommentViewModel
+            {
+                Name = user.UserName,
+                Img = string.IsNullOrEmpty(user.AvatarUrl)
+                    ? "/image/default.jpg"
+                    : user.AvatarUrl
+            };
+
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Add(UserCommentViewModel model)
         {
-            var user = GetCurrentUser();
-
-            if (user == null)
-                return NotFound();
+            var user = _authService.GetUser();
 
             if (string.IsNullOrWhiteSpace(model.Comments))
             {
@@ -94,10 +94,7 @@ namespace WebProject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var user = GetCurrentUser();
-
-            if (user == null)
-                return NotFound();
+            var user = _authService.GetUser();
 
             var comment = _userCommentsRepository
                 .GetAll()
@@ -113,6 +110,5 @@ namespace WebProject.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

@@ -32,6 +32,7 @@ builder.Services.AddDbContext<WebProjectContext>(
 builder.Services.AddSignalR();
 
 builder.Services.AddScoped<ICoffeeRepository,CoffeeRepository>();
+
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
