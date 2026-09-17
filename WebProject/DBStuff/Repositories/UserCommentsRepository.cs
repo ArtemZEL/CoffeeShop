@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using WebProject.DBStuff;
 using WebProject.DBStuff.Models.CoffeShop;
+using WebProject.DBStuff.Repositories.Interface;
 
 namespace WebProject.DBStuff.Repositories
 {
-    public class UserCommentsRepository
+    public class UserCommentsRepository : BaseRepository<UserCommentsDB>,IUserCommentsRepository
     {
-
-
         private readonly WebProjectContext _dbContext;
 
-        public UserCommentsRepository(WebProjectContext dbContext)
+        public UserCommentsRepository(WebProjectContext dbContext) : base (dbContext)
         {
             _dbContext = dbContext;
         }

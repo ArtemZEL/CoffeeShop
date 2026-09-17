@@ -5,6 +5,7 @@ using WebProject.DBStuff;
 using WebProject.DBStuff.Repositories;
 using WebProject.DBStuff.Repositories.Interface;
 using WebProject.Models;
+using WebProject.Models.Users;
 using WebProject.Service.Flie;
 
 namespace WebProject.Controllers
@@ -16,14 +17,14 @@ namespace WebProject.Controllers
         /// </summary>
         /// <returns></returns>
         private readonly ICoffeeRepository _coffeeRepository;
-        private readonly UserCommentsRepository _userCommentsRepository;
+        private readonly IUserCommentsRepository _userCommentsRepository;
         private WebProjectContext _webProjectContext;
         private readonly ISliderFileServices _sliderFileServices;
 
 
         public CoffeShopController(
             ICoffeeRepository coffeeRepository,
-            UserCommentsRepository userCommentsRepository,
+            IUserCommentsRepository userCommentsRepository,
             WebProjectContext webProjectContext,
             ISliderFileServices sliderFileServices)
         {
@@ -44,7 +45,7 @@ namespace WebProject.Controllers
                     Cell = x.Cell
                 }).ToList(),
 
-                UserComments = _webProjectContext.UserComments
+                UserComments = _userCommentsRepository.GetAll()
                 .Select(u => new UserCommentViewModel
                 {
                     Name = u.Name,

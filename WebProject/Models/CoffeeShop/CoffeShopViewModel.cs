@@ -1,3 +1,5 @@
+using WebProject.Models.Users;
+
 namespace WebProject.Models
 {
     public class CoffeShopViewModel

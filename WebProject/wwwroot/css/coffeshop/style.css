@@ -408,6 +408,10 @@ header.shadow {
     display: none;
 }
 
+.box.templatesuser {
+    display: none;
+}
+
 .view.mode {
     cursor: pointer;
 }

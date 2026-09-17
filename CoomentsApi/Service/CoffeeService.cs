@@ -1,7 +1,7 @@
 ﻿using CooffeeApi.DbStuff;
 using CooffeeApi.DbStuff.Model;
 
-namespace CooffeeApi
+namespace CoffeeApi.Service
 {
     public class CoffeeService
     {
@@ -32,6 +32,25 @@ namespace CooffeeApi
 
             return coffee.Id;
         }
+
+        public bool UpdateCoffee(int id, string name, string url, string category)
+        {
+            var addingCoffee = _coffeeContext.Coffees
+                .FirstOrDefault(x => x.Id == id);
+            if (addingCoffee == null)
+            {
+                return false;
+            }
+
+            addingCoffee.Name = name;
+            addingCoffee.Url = url;
+            addingCoffee.Category = category;
+            _coffeeContext.SaveChanges();
+
+
+            return true;
+        }
+
 
     }
 }
