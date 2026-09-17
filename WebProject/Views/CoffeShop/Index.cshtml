@@ -49,17 +49,11 @@
     </div>
     <!-- Customers MINIMAL API -->
     <div class="customers-container usercomments-minimal-api">
-        @foreach (var userComments in Model.UserComments)
-        {
-            <div class="box templatescoffee">
-                <img src="@(string.IsNullOrEmpty(userComments.Img) ? "/image/default.jpg" : userComments.Img)" alt="User Image" />
-                <h2>@userComments.Name</h2>
-                <p>
-                    @userComments.Comments
-                </p>
-            </div>
-        }
-
+        <div class="box templatesuser">
+            <img src="" alt="User Image" />
+            <h2></h2>
+            <p></p>
+        </div>
     </div>
     <!-- Container -->
     <div class="customers-container">

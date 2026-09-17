@@ -13,9 +13,9 @@ namespace CoffeeApi.Service
             _coffeeDBContext = coffeeDBContext;
         }
 
-        public List<string> GetAllCommentsOfUsers()
+        public List<UserComments> GetAllCommentsOfUsers()
         {
-            return _coffeeDBContext.UserComments.Select(x => x.Name).ToList();
+            return _coffeeDBContext.UserComments.ToList();
         }
 
         public int CreateComments(string name, string img, string comment)
