@@ -71,6 +71,10 @@ app.UseMiddleware<CustomLocalizazationMidleware>();
 
 app.MapHub<NotificationHub>("/hubs/notification");
 app.MapControllerRoute(
+    name: "product-card",
+    pattern: "Coffee/{category}/{name}",
+    defaults: new { controller = "CoffeShop", action = "Card" });
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 

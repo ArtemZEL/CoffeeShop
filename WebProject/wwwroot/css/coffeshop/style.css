@@ -346,6 +346,11 @@ header.shadow {
   box-shadow: var(--box-shadow);
 }
 
+.products-container .box > a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .products-container img {
   width: 100%;
   height: 250px;

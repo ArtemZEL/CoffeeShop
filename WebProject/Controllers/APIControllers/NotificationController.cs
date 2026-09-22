@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using WebProject.Controllers.CustomAuthorizeAttributtes;
@@ -23,7 +24,8 @@ namespace WebProject.Controllers.API
             _authService = authService;
         }
 
-       // [Role(Enum.Role.Admin)]
+        [Authorize]
+        // [Role(Enum.Role.Admin)]
         public bool SendMessageToAll([FromForm] string message)
         {
             var user = _authService.GetUser();

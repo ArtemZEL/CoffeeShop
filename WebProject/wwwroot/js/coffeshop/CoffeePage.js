@@ -8,8 +8,5 @@ $(document).ready(function () {
             $(".cell.dell").closest('.box').remove();
         }
     })
-
-
-
 });
 
