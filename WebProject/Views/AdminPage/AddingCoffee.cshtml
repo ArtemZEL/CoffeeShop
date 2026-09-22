@@ -44,7 +44,7 @@
                     <p class="author">Added by: @coffee.AuthorName</p>
                     <p class="category">Category: @coffee.CategoryName</p>
                     <div class="content">
-                        <span class="cell">$@coffee.Cell</span>
+                        <span class="cell">$@coffee.Cell.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)</span>
                         @if (coffee.CanFindPage)
                         {
                             //<a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>
