@@ -34,17 +34,17 @@
                 }
             </div>
 
-            <h2 class="product-card__subtitle">Условия заказа</h2>
-            <div class="product-card__text product-card__text--terms">
+            @* <h2 class="product-card__subtitle">Условия заказа</h2> *@
+            @* <div class="product-card__text product-card__text--terms">
                 @foreach (var term in Model.OrderTerms)
                 {
                     <p>@term</p>
                 }
-            </div>
+            </div> *@
 
             <div class="product-card__price-block">
                 <span class="product-card__price-label">за пачку</span>
-                <div class="product-card__price">@Model.Price.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) р.</div>
+                <div class="product-card__price">$ @Model.Price.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)</div>
             </div>
 
             <label class="product-card__field">
