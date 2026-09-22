@@ -79,6 +79,14 @@ namespace WebProject.Controllers
             var user = _authService.GetUser();
             user.Language = language;
             _userRepository.Update(user);
+
+            var referer = Request.Headers.Referer.ToString();
+            if (Uri.TryCreate(referer, UriKind.Absolute, out var uri)
+                && string.Equals(uri.Host, Request.Host.Host, StringComparison.OrdinalIgnoreCase))
+            {
+                return Redirect(referer);
+            }
+
             return RedirectToAction("Index", "CoffeShop");
         }
 
