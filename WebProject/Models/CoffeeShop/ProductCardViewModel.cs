@@ -10,7 +10,6 @@ namespace WebProject.Models.CoffeeShop
         public int PackWeight { get; set; }
         public decimal Price { get; set; }
         public List<string> Description { get; set; } = new();
-        public List<string> OrderTerms { get; set; } = new();
         public List<string> Weights { get; set; } = new();
         public List<string> Grinds { get; set; } = new();
         public int Quantity { get; set; } = 1;
