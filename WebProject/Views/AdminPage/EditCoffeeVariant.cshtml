@@ -1,0 +1,65 @@
+﻿@model WebProject.Models.CoffeeShop.CoffeeProductVariantViewModel
+
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+}
+
+<div>
+    <h2>Редактирование варианта кофе</h2>
+
+    <form asp-action="EditCoffeeVariant"
+          asp-controller="AdminPage"
+          method="post">
+
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="CoffeeProductId" />
+
+        <div asp-validation-summary="All"></div>
+
+        <div>
+            <label>Вес, грамм</label>
+
+            <input asp-for="Weigths"
+                   type="number"
+                   min="1"
+                   max="10000" />
+
+            <span asp-validation-for="Weigths"></span>
+        </div>
+
+        <div>
+            <label>Помол</label>
+
+            <select asp-for="GrindId"
+                    asp-items="Model.GrindList">
+                <option value="">-- Выберите помол --</option>
+            </select>
+
+            <span asp-validation-for="GrindId"></span>
+        </div>
+
+        <div>
+            <label>Цена</label>
+
+            <input asp-for="Price"
+                   type="number"
+                   min="0.01"
+                   max="100000"
+                   step="0.01" />
+
+            <span asp-validation-for="Price"></span>
+        </div>
+
+        <button type="submit">
+            Сохранить изменения
+        </button>
+
+        <a asp-action="CoffeeVariants"
+           asp-controller="AdminPage"
+           asp-route-id="@Model.CoffeeProductId">
+            Отмена
+        </a>
+    </form>
+</div>

@@ -43,7 +43,7 @@ namespace WebProject.Controllers
                 {
                     Name = x.Name,
                     Img = x.Img,
-                    Cell = x.Cell
+                    //Cell = x.Cell
                 }).ToList(),
 
                 UserComments = _userCommentsRepository.GetAll()

@@ -32,6 +32,8 @@ builder.Services.AddDbContext<WebProjectContext>(
 builder.Services.AddSignalR();
 
 builder.Services.AddScoped<ICoffeeRepository,CoffeeRepository>();
+builder.Services.AddScoped<ICoffeeProductVariantRepository, CoffeeProductVariantRepository>();
+builder.Services.AddScoped<ICoffeeGrindRepository, CoffeeGrindRepository>();
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();

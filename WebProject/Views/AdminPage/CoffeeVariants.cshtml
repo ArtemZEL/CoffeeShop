@@ -1,0 +1,129 @@
+﻿@model WebProject.Models.CoffeeProductViewModel
+
+@{
+    Layout = "CoffeShopPages/_LayoutCoffeShopTestPage";
+    var variantModel = ViewBag.VariantModel as WebProject.Models.CoffeeShop.CoffeeProductVariantViewModel;
+}
+
+<div>
+    <h2>Варианты товара</h2>
+
+    <h3>@Model.Name</h3>
+
+    <hr />
+
+    <h4>Добавить вариант</h4>
+
+    @if (TempData["VariantError"] is string variantError)
+    {
+        <p>@variantError</p>
+    }
+
+    <div asp-validation-summary="All"></div>
+
+    <form asp-action="AddCoffeeVariant"
+          asp-controller="AdminPage"
+          method="post">
+
+        @Html.AntiForgeryToken()
+
+        <input type="hidden"
+               name="CoffeeProductId"
+               value="@Model.Id" />
+
+        <div>
+            <label>Вес, грамм</label>
+
+            <input type="number"
+                   name="Weigths"
+                   min="1"
+                   value="@(variantModel?.Weigths > 0 ? variantModel.Weigths : 1000)"
+                   required />
+        </div>
+
+        <div>
+            <label>Помол</label>
+            <select name="GrindId" asp-items="@variantModel?.GrindList" required>
+                <option value="">-- Выберите помол --</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Цена</label>
+
+            <input type="number"
+                   name="Price"
+                   min="0.01"
+                   step="0.01"
+                   value="@(variantModel?.Price > 0 ? variantModel.Price.ToString(System.Globalization.CultureInfo.InvariantCulture) : null)"
+                   required />
+        </div>
+
+        <th>Действия</th>
+
+
+
+        <button type="submit">
+            Добавить вариант
+        </button>
+    </form>
+
+    <hr />
+
+    <h4>Существующие варианты</h4>
+
+    @if (Model.Variants.Any())
+    {
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Вес</th>
+                    <th>Помол</th>
+                    <th>Цена</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var variant in Model.Variants)
+                {
+                    <tr>
+                        <td>@variant.Weigths</td>
+                        <td>@variant.GrindName</td>
+                        <td>@variant.Price</td>
+                        <td>
+                                <a asp-action="EditCoffeeVariant"
+                                     asp-controller="AdminPage"
+                                     asp-route-id="@variant.Id">
+                                     Редактировать
+                                </a>
+
+                            <form asp-action="RemoveCoffeeVariant"
+                                  asp-controller="AdminPage"
+                                  method="post">
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden"
+                                       name="id"
+                                       value="@variant.Id" />
+
+                                <input type="hidden"
+                                       name="coffeeProductId"
+                                       value="@Model.Id" />
+
+                                <button type="submit"
+                                        onclick="return confirm('Удалить этот вариант?');">
+                                    Удалить
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>У этого товара пока нет вариантов.</p>
+    }
+</div>

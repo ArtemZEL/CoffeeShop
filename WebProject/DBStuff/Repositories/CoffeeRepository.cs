@@ -18,6 +18,7 @@ namespace WebProject.DBStuff.Repositories
             return _dbSet
                 .Include(x => x.AuthorAdd)
                 .Include(x => x.Category)// This will download the linked user
+                .Include(x => x.Variants)
                 .ToList();
         }
 

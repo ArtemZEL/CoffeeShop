@@ -28,15 +28,19 @@ namespace WebProject.Controllers
         private IProfileFileService _profileFileService;
         private IUserRepository _userRepository;
         private ISliderFileServices _sliderFileServices;
+        private ICoffeeProductVariantRepository _coffeeProductVariantRepository;
+        private ICoffeeGrindRepository _coffeeGrindRepository;
 
-        public AdminPageController(ICoffeeRepository repository, 
-            WebProjectContext webProjectDBContext, 
-            ICategoryRepository categoryRepository, 
-            IAuthService authService, 
-            ICoffeShopPermision coffeShopPermision, 
-            IProfileFileService profileFileService, 
-            IUserRepository userRepository, 
-            ISliderFileServices sliderFileServices)
+        public AdminPageController(ICoffeeRepository repository,
+            WebProjectContext webProjectDBContext,
+            ICategoryRepository categoryRepository,
+            IAuthService authService,
+            ICoffeShopPermision coffeShopPermision,
+            IProfileFileService profileFileService,
+            IUserRepository userRepository,
+            ISliderFileServices sliderFileServices,
+            ICoffeeProductVariantRepository coffeeProductVariantRepository,
+            ICoffeeGrindRepository coffeeGrindRepository)
         {
             _repositoryCoffee = repository;
             _webProjectDBContext = webProjectDBContext;
@@ -46,6 +50,8 @@ namespace WebProject.Controllers
             _profileFileService = profileFileService;
             _userRepository = userRepository;
             _sliderFileServices = sliderFileServices;
+            _coffeeProductVariantRepository = coffeeProductVariantRepository;
+            _coffeeGrindRepository = coffeeGrindRepository;
         }
 
         public IActionResult Index()
@@ -68,7 +74,8 @@ namespace WebProject.Controllers
                     Id = db.Id,
                     Name = db.Name,
                     Img = db.Img,
-                    Cell = db.Cell,
+                    //Cell = db.Cell,
+                    MinPrice = db.Variants.Select(vc => (decimal?)vc.Price).Min(),
                     AuthorName = db.AuthorAdd?.UserName ?? "No author",
                     CanFindPage = _coffeShopPermision.CanFindPage(db),
                     CategoryId = db.CategoryId,
@@ -110,8 +117,6 @@ namespace WebProject.Controllers
             return View(viewModel);
         }
 
-
-
         [HttpPost]
         public IActionResult AddPageCoffee(CoffeeCreationViewModel productViewModel)
         {
@@ -131,7 +136,8 @@ namespace WebProject.Controllers
             {
                 Name = productViewModel.Name,
                 Img = productViewModel.Img,
-                Cell = productViewModel.Cell,
+                Description = productViewModel.Description,
+                //Cell = productViewModel.Cell,
                 CategoryId = productViewModel.CategoryId,
                 AuthorId = currentUserId
             };
@@ -179,7 +185,7 @@ namespace WebProject.Controllers
                 Id = coffee.Id,
                 Name = coffee.Name,
                 Img = coffee.Img,
-                Cell = coffee.Cell,
+                //Cell = coffee.Cell,
                 CategoryId = coffee.CategoryId,
                 CategoryNameList = categories.Select(x => new SelectListItem
                 {
@@ -207,7 +213,7 @@ namespace WebProject.Controllers
 
             existingCoffee.Name = productViewModel.Name;
             existingCoffee.Img = productViewModel.Img;
-            existingCoffee.Cell = productViewModel.Cell;
+            // existingCoffee.Cell = productViewModel.Cell;
             existingCoffee.CategoryId = productViewModel.CategoryId;
 
             _repositoryCoffee.Update(existingCoffee);
@@ -233,7 +239,7 @@ namespace WebProject.Controllers
             _profileFileService.ReplaceToAvatarToDefault(userId);
             return RedirectToAction("AllAvatarsUser");
         }
-        
+
         public IActionResult UpdateImagePage()
         {
             return View();
@@ -280,6 +286,222 @@ namespace WebProject.Controllers
 
             return View(model);
         }
+        /// <summary>
+        /// Variants of coffee products. This method retrieves the variants for a specific coffee product based on its ID. It checks if the coffee product exists and if the user has permission to view it. If both conditions are met, it returns a view displaying the variants of the specified coffee product.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult CoffeeVariants(int id)
+        {
+            var coffee = _repositoryCoffee.GetFirstById(id);
+            if (coffee == null)
+            {
+                return NotFound();
+            }
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
+
+            return CoffeeVariantsView(coffee);
+        }
+
+        [HttpGet]
+        public IActionResult EditCoffeeVariant(int id)
+        {
+            var variant = _coffeeProductVariantRepository
+                .GetAll()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (variant == null)
+            {
+                return NotFound();
+            }
+
+            var coffee = _repositoryCoffee
+                .GetAll()
+                .FirstOrDefault(x => x.Id == variant.CoffeeProductId);
+
+            if (coffee == null)
+            {
+                return NotFound();
+            }
+
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
+
+            var grinds = _coffeeGrindRepository.GetAll()
+                .OrderBy(x => x.Id)
+                .Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString(),
+                })
+                .ToList();
+
+            var model = new CoffeeProductVariantViewModel
+            {
+                Id = variant.Id,
+                CoffeeProductId = variant.CoffeeProductId,
+                Weigths = variant.Weight,
+                GrindId = variant.GrindId,
+                Price = variant.Price,
+                GrindList = grinds
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddCoffeeVariant(CoffeeProductVariantViewModel model)
+        {
+            var coffee = _repositoryCoffee.GetFirstById(model.CoffeeProductId);
+
+            if (coffee == null)
+            {
+                return NotFound();
+            }
+
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return CoffeeVariantsView(coffee, model);
+            }
+
+            var grindExists = _coffeeGrindRepository.GetAll()
+                .Any(x => x.Id == model.GrindId);
+
+            if (!grindExists)
+            {
+                ModelState.AddModelError(
+                    nameof(model.GrindId),
+                    "Выбранный помол не существует.");
+
+                return CoffeeVariantsView(coffee, model);
+            }
+
+            var variantExists = _coffeeProductVariantRepository
+                .GetCoffeeProductsId(model.CoffeeProductId)
+                .Any(x => x.Weight == model.Weigths
+                    && x.GrindId == model.GrindId);
+
+            if (variantExists)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Такой вариант (вес и помол) уже существует.");
+
+                return CoffeeVariantsView(coffee, model);
+            }
+
+            var variant = new CoffeeProductVariantDB
+            {
+                CoffeeProductId = model.CoffeeProductId,
+                Weight = model.Weigths,
+                GrindId = model.GrindId,
+                Price = model.Price
+            };
+
+            _coffeeProductVariantRepository.Add(variant);
+
+            return RedirectToAction(
+            "CoffeeVariants",
+            new { id = model.CoffeeProductId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditCoffeeVariant(CoffeeProductVariantViewModel model)
+        {
+            var coffee = _repositoryCoffee.GetAll().FirstOrDefault(x => x.Id == model.CoffeeProductId);
+
+            if (coffee == null)
+            {
+                return NotFound();
+            }
+
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return CoffeeVariantsView(coffee, model);
+            }
+
+            var grindExists = _coffeeGrindRepository.GetAll()
+                .Any(x => x.Id == model.GrindId);
+
+            if (!grindExists)
+            {
+                ModelState.AddModelError(
+                    nameof(model.GrindId),
+                    "Выбранный помол не существует.");
+
+                return CoffeeVariantsView(coffee, model);
+            }
+
+            var variant = _coffeeProductVariantRepository
+                .GetAll()
+                .FirstOrDefault(x => x.Id == model.Id);
+
+            if (variant == null)
+            {
+                return NotFound();
+            }
+
+            variant.Weight = model.Weigths;
+            variant.GrindId = model.GrindId;
+            variant.Price = model.Price;
+
+            _coffeeProductVariantRepository.Update(variant);
+
+            return RedirectToAction(
+                "CoffeeVariants",
+                new { id = model.CoffeeProductId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoveCoffeeVariant(int id, int coffeeProductId)
+        {
+            var coffee = _repositoryCoffee.GetFirstById(coffeeProductId);
+
+            if (coffee == null)
+            {
+                return NotFound();
+            }
+
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
+
+            var variant = _coffeeProductVariantRepository
+                .GetCoffeeProductsId(coffeeProductId)
+                .FirstOrDefault(x => x.Id == id);
+
+            if (variant == null)
+            {
+                return NotFound();
+            }
+
+            _coffeeProductVariantRepository.Remove(variant);
+
+            return RedirectToAction(
+                "CoffeeVariants",
+                new { id = coffeeProductId });
+        }
+
 
         //Test AJAX method the next update deleting 
         [HttpPost]
@@ -308,6 +530,51 @@ namespace WebProject.Controllers
         {
             _repositoryCoffee.Remove(id);
             return Json(new { success = true });
+        }
+
+        private IActionResult CoffeeVariantsView(
+            CoffeeProductDB coffee,
+            CoffeeProductVariantViewModel? postedVariant = null)
+        {
+            var grinds = _coffeeGrindRepository.GetAll()
+              .OrderBy(x => x.Id)
+              .Select(x => new SelectListItem
+              {
+                  Text = x.Name,
+                  Value = x.Id.ToString(),
+                  Selected = postedVariant != null && x.Id == postedVariant.GrindId
+              })
+              .ToList();
+
+            var variants = _coffeeProductVariantRepository.GetCoffeeProductsId(coffee.Id)
+                .Select(x => new CoffeeProductVariantViewModel
+                {
+                    Id = x.Id,
+                    CoffeeProductId = x.CoffeeProductId,
+                    Weigths = x.Weight,
+                    GrindId = x.GrindId,
+                    Price = x.Price,
+                    GrindName = x.Grind.Name
+                }).ToList();
+
+            var variantModel = postedVariant ?? new CoffeeProductVariantViewModel
+            {
+                CoffeeProductId = coffee.Id
+            };
+            variantModel.CoffeeProductId = coffee.Id;
+            variantModel.GrindList = grinds;
+
+            var model = new CoffeeProductViewModel
+            {
+                Id = coffee.Id,
+                Name = coffee.Name,
+                Img = coffee.Img,
+                Variants = variants
+            };
+
+            ViewBag.VariantModel = variantModel;
+
+            return View("CoffeeVariants", model);
         }
 
     }

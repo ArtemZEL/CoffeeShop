@@ -12,6 +12,7 @@ namespace WebProject.Models
         [TestAtrribute]
         public string Name { get; set; }
         public decimal Cell { get; set; }
+        public string Description { get; set; }
         public int AuthorId { get; set; }
         public int? CategoryId { get; set; }
         public List<SelectListItem> CategoryNameList { get; set; } = new List<SelectListItem>();

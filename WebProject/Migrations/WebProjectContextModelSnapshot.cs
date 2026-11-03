@@ -54,6 +54,23 @@ namespace WebProject.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.CoffeeGrindDB", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CoffeeGrinds");
+                });
+
             modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.CoffeeProductDB", b =>
                 {
                     b.Property<int>("Id")
@@ -68,8 +85,9 @@ namespace WebProject.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("Cell")
-                        .HasColumnType("numeric");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Img")
                         .IsRequired()
@@ -86,6 +104,35 @@ namespace WebProject.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("CoffeeProducts");
+                });
+
+            modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.CoffeeProductVariantDB", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CoffeeProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GrindId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoffeeProductId");
+
+                    b.HasIndex("GrindId");
+
+                    b.ToTable("CoffeeProductVariants");
                 });
 
             modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.UserCommentsDB", b =>
@@ -202,11 +249,31 @@ namespace WebProject.Migrations
 
                     b.HasOne("WebProject.DBStuff.Models.CoffeShop.CategoryDB", "Category")
                         .WithMany("CoffeeProducts")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("AuthorAdd");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.CoffeeProductVariantDB", b =>
+                {
+                    b.HasOne("WebProject.DBStuff.Models.CoffeShop.CoffeeProductDB", "CoffeeProduct")
+                        .WithMany("Variants")
+                        .HasForeignKey("CoffeeProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebProject.DBStuff.Models.CoffeShop.CoffeeGrindDB", "Grind")
+                        .WithMany("ProductVariants")
+                        .HasForeignKey("GrindId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CoffeeProduct");
+
+                    b.Navigation("Grind");
                 });
 
             modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.UserCommentsDB", b =>
@@ -234,6 +301,16 @@ namespace WebProject.Migrations
             modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.CategoryDB", b =>
                 {
                     b.Navigation("CoffeeProducts");
+                });
+
+            modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.CoffeeGrindDB", b =>
+                {
+                    b.Navigation("ProductVariants");
+                });
+
+            modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.CoffeeProductDB", b =>
+                {
+                    b.Navigation("Variants");
                 });
 
             modelBuilder.Entity("WebProject.DBStuff.Models.CoffeShop.UserDB", b =>

@@ -16,10 +16,9 @@
             @Html.ValidationMessageFor(x => x.Img)
         </div>
         <div>
-            <input type="text" name="Cell" placeholder="Add Price" />
-            @Html.ValidationMessageFor(x => x.Cell)
+            <textarea name="Description" placeholder="Coffee description"></textarea>
+            @Html.ValidationMessageFor(x => x.Description)
         </div>
-
         <div>
             @if (Model.CategoryNameList != null && Model.CategoryNameList.Any())
             {
