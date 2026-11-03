@@ -92,6 +92,12 @@
                         <td>@variant.GrindName</td>
                         <td>@variant.Price</td>
                         <td>
+                                <a asp-action="EditCoffeeVariant"
+                                     asp-controller="AdminPage"
+                                     asp-route-id="@variant.Id">
+                                     Редактировать
+                                </a>
+
                             <form asp-action="RemoveCoffeeVariant"
                                   asp-controller="AdminPage"
                                   method="post">

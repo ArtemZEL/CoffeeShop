@@ -286,7 +286,11 @@ namespace WebProject.Controllers
 
             return View(model);
         }
-
+        /// <summary>
+        /// Variants of coffee products. This method retrieves the variants for a specific coffee product based on its ID. It checks if the coffee product exists and if the user has permission to view it. If both conditions are met, it returns a view displaying the variants of the specified coffee product.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult CoffeeVariants(int id)
         {
@@ -301,6 +305,54 @@ namespace WebProject.Controllers
             }
 
             return CoffeeVariantsView(coffee);
+        }
+
+        [HttpGet]
+        public IActionResult EditCoffeeVariant(int id)
+        {
+            var variant = _coffeeProductVariantRepository
+                .GetAll()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (variant == null)
+            {
+                return NotFound();
+            }
+
+            var coffee = _repositoryCoffee
+                .GetAll()
+                .FirstOrDefault(x => x.Id == variant.CoffeeProductId);
+
+            if (coffee == null)
+            {
+                return NotFound();
+            }
+
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
+
+            var grinds = _coffeeGrindRepository.GetAll()
+                .OrderBy(x => x.Id)
+                .Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString(),
+                })
+                .ToList();
+
+            var model = new CoffeeProductVariantViewModel
+            {
+                Id = variant.Id,
+                CoffeeProductId = variant.CoffeeProductId,
+                Weigths = variant.Weight,
+                GrindId = variant.GrindId,
+                Price = variant.Price,
+                GrindList = grinds
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -367,6 +419,59 @@ namespace WebProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public IActionResult EditCoffeeVariant(CoffeeProductVariantViewModel model)
+        {
+            var coffee = _repositoryCoffee.GetAll().FirstOrDefault(x => x.Id == model.CoffeeProductId);
+
+            if (coffee == null)
+            {
+                return NotFound();
+            }
+
+            if (!_coffeShopPermision.CanFindPage(coffee))
+            {
+                return Forbid();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return CoffeeVariantsView(coffee, model);
+            }
+
+            var grindExists = _coffeeGrindRepository.GetAll()
+                .Any(x => x.Id == model.GrindId);
+
+            if (!grindExists)
+            {
+                ModelState.AddModelError(
+                    nameof(model.GrindId),
+                    "Выбранный помол не существует.");
+
+                return CoffeeVariantsView(coffee, model);
+            }
+
+            var variant = _coffeeProductVariantRepository
+                .GetAll()
+                .FirstOrDefault(x => x.Id == model.Id);
+
+            if (variant == null)
+            {
+                return NotFound();
+            }
+
+            variant.Weight = model.Weigths;
+            variant.GrindId = model.GrindId;
+            variant.Price = model.Price;
+
+            _coffeeProductVariantRepository.Update(variant);
+
+            return RedirectToAction(
+                "CoffeeVariants",
+                new { id = model.CoffeeProductId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult RemoveCoffeeVariant(int id, int coffeeProductId)
         {
             var coffee = _repositoryCoffee.GetFirstById(coffeeProductId);
@@ -396,6 +501,7 @@ namespace WebProject.Controllers
                 "CoffeeVariants",
                 new { id = coffeeProductId });
         }
+
 
         //Test AJAX method the next update deleting 
         [HttpPost]
