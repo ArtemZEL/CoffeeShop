@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.ComponentModel.DataAnnotations;
+using WebProject.Models.CoffeeShop;
 using WebProject.Models.CustomValidation;
 
 namespace WebProject.Models
@@ -12,6 +13,7 @@ namespace WebProject.Models
         public string Img { get; set; }
         public string Name { get; set; }
         public decimal Cell { get; set; }
+        public decimal? MinPrice { get; set; }
         public int AuthorId { get; set; }
         public string AuthorName { get; set; }
         public int? CategoryId { get; set; }
@@ -20,5 +22,6 @@ namespace WebProject.Models
         public bool CanFindPage { get; set; }
         public List<SelectListItem> CategoryNameList { get; set; } = new List<SelectListItem>();
         public List<string> GalleryImages { get; set; } = new List<string>();
+        public List<CoffeeProductVariantViewModel> Variants { get; set; } = new List<CoffeeProductVariantViewModel>();
     }
 }

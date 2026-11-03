@@ -43,15 +43,35 @@
                     <p class="author">Added by: @coffee.AuthorName</p>
                     <p class="category">Category: @coffee.CategoryName</p>
                     <div class="content">
-                        <span class="cell">$@coffee.Cell.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)</span>
+                        @* <span class="cell">$@coffee.Cell.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)</span> *@
+                        @if (coffee.MinPrice.HasValue)
+                        {
+                            <span class="cell">
+                            От @coffee.MinPrice.Value.ToString(
+                                "0.##",
+                                System.Globalization.CultureInfo.InvariantCulture)
+                            </span>
+                        }
+                        else
+                        {
+                            <span>Нет вариантов</span>
+                        }
+                        
                         @if (coffee.CanFindPage)
                         {
                             //<a href="/AdminPage/RemoveCoffee?id=@coffee.Id">Remove</a>
                             <a href="/AdminPage/EditCoffee?id=@coffee.Id">Edit</a>
                         }
                         @**@
+
                     </div>
                 </div>
+                <div>
+                    <a asp-action="CoffeeVariants" asp-controller="AdminPage" asp-route-id="@coffee.Id">
+                        Управление вариантами
+                    </a>
+                </div>
+                
             }
         }
         else

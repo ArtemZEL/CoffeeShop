@@ -68,7 +68,9 @@ DBStuff/
  Models/
   CoffeShop/
    CategoryDB.cs
+   CoffeeGrindDB.cs
    CoffeeProductDB.cs
+   CoffeeProductVariantDB.cs
    UserCommentsDB.cs
    UserDB.cs
   Notifications/Notification.cs
@@ -77,12 +79,16 @@ DBStuff/
   Interface/
    IBaseRepository.cs
    ICategoryRepository.cs
+   ICoffeeGrindRepository.cs
+   ICoffeeProductVariantRepository.cs
    ICoffeeRepository.cs
    INotificationRepository.cs
    IUserCommentsRepository.cs
    IUserRepository.cs
   BaseRepository.cs
   CategoryRepository.cs
+  CoffeeGrindRepository.cs
+  CoffeeProductVariantRepository.cs
   CoffeeRepository.cs
   NotificationRepository.cs
   UserCommentsRepository.cs
@@ -118,12 +124,19 @@ Migrations/
  20260515195529_CreateNotification.Designer.cs
  20260913140906_AddUserRelationToComments.cs
  20260913140906_AddUserRelationToComments.Designer.cs
+ 20260930081001_UpdateCardPage.cs
+ 20260930081001_UpdateCardPage.Designer.cs
+ 20260930081538_AddCoffeeGrinds.cs
+ 20260930081538_AddCoffeeGrinds.Designer.cs
+ 20261015080939_RemoveCellFromCoffeeProducts.cs
+ 20261015080939_RemoveCellFromCoffeeProducts.Designer.cs
  WebProjectContextModelSnapshot.cs
 Models/
  Auth/AuthViewModel.cs
  CoffeeShop/
   CoffeDetailsViewModel.cs
   CoffeeCreationViewModel.cs
+  CoffeeProductVariantViewModel.cs
   CoffeeProductViewModel.cs
   CoffeeStatisticsViewModel.cs
   CoffeeSummaryViewModel.cs
@@ -223,6 +236,7 @@ Views/
   AddPageCoffee.cshtml
   AllAvatarsUser.cshtml
   CoffeeStatistics.cshtml
+  CoffeeVariants.cshtml
   EditCoffee.cshtml
   Index.cshtml
   ManageGallery.cshtml

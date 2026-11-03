@@ -6,7 +6,7 @@ namespace WebProject.Models.CustomValidation
     public class PriceCommaAttribute  : ValidationAttribute
     {
         public PriceCommaAttribute()
-        {
+        {  
             ErrorMessage = "Цена должна быть указана через запятую. Например: 12,5";
         }
 
